@@ -5,8 +5,8 @@ import java.util.TreeMap;
 
 public class AccountDatabase {
 
-    private final String file_name;
-    private final TreeMap<String, String> account_db;
+    private String file_name;
+    private TreeMap<String, String> account_db;
 
     public AccountDatabase(String file_name){
         this.file_name = file_name;
