@@ -34,7 +34,7 @@ public class CLI {
                     System.out.println("""
                             #####################################################################
                             ID FORMATTING:
-                            -IDs will contain only 8 numbers
+                            -IDs will contain only 8 digits
                                                         
                             PASSWORD FORMATTING:
                             -Ensure that at least one upper case letter is used
