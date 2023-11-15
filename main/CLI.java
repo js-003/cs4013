@@ -9,6 +9,8 @@ public class CLI {
     //Admin password for restricted access
     private String admin_pass = "TestingStuff123?";
     private String admin_pass_attempt = "";
+
+    
     public void run() {
         Scanner in = new Scanner(System.in);
         boolean running = true;
@@ -93,4 +95,5 @@ public class CLI {
 
         }
     }
+    
 }
