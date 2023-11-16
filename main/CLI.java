@@ -8,35 +8,23 @@ public class CLI {
     private String password;
     //Admin password for restricted access
     private String admin_pass = "TestingStuff123?";
-    private String admin_pass_attempt = "";
-
-    
+    Scanner in = new Scanner(System.in);
+    AccountDatabase user_db = new AccountDatabase("Account.csv");
     public void run() {
-        Scanner in = new Scanner(System.in);
         boolean running = true;
-        AccountDatabase user_db = new AccountDatabase("Account.csv");
         System.out.println(user_db.toString());
-
         while (running) {
-            System.out.println("L)ogin F)ormatting A)dd-User R)emove-User ~more functionality to be added~");
+            System.out.println("U)ser-Acess F)ormatting A)dmin-Access ~more functionality to be added~");
             String command = in.nextLine();
             switch (command) {
-                case "L" -> {
-                    System.out.println("Enter your user id.");
-                    user_id = in.nextLine();
-                    System.out.println("Enter the user's password.");
-                    password = in.nextLine();
-                    if (user_db.login(user_id, password)) {
-                        System.out.println("login was successful");
-                    } else {
-                        System.out.println("login was unsuccessful");
-                    }
+                case "U" -> {
+                    userAcess();
                 }
                 case "F" -> {
                     System.out.println("""
                             #####################################################################
                             ID FORMATTING:
-                            -IDs will contain only 8 digits
+                            -IDs will contain only 8 numbers
                                                         
                             PASSWORD FORMATTING:
                             -Ensure that at least one upper case letter is used
@@ -50,50 +38,84 @@ public class CLI {
 
                 }
                 case "A" -> {
-                    System.out.println("Create the new user ID");
-                    user_id = in.nextLine();
-                    if(!user_db.isValidId(user_id)){
-                        System.out.println("Invalid ID try again!");
-                        break;
-                    }
-                    System.out.println("Create the new password for that user");
-                    password = in.nextLine();
-                    if(!user_db.isValidPassword(password)){
-                        System.out.println("Invalid password try again!");
-                        break;
-                    }
-                    System.out.println("ADMIN PASSWORD REQUIRED TO PROCEED");
-                    admin_pass_attempt = in.nextLine();
-                    if(Objects.equals(admin_pass_attempt, admin_pass)) {
-                        user_db.addUser(user_id, password);
-                        user_db.saveToFile();
-                        System.out.println("New user added!");
-                    } else {
-                        System.out.println("INCORRECT PASSWORD: ACCESS DENIED!");
-                    }
-                }
-                case "R" -> {
-                    System.out.println("Enter user ID");
-                    user_id = in.nextLine();
-                    if(!user_db.isValidId(user_id)){
-                        System.out.println("Invalid ID try again!");
-                        break;
-                    }
-                    System.out.println("ADMIN PASSWORD REQUIRED TO PROCEED");
-                    admin_pass_attempt = in.nextLine();
-                    if(Objects.equals(admin_pass_attempt, admin_pass)) {
-                        user_db.removeUser(user_id, password);
-                        user_db.saveToFile();
-                        System.out.println("User removed!");
-                    } else {
-                        System.out.println("INCORRECT PASSWORD: ACCESS DENIED!");
-                    }
-
+                    adminAccess();
                 }
 
             }
 
         }
     }
-    
+
+    private void adminAccess(){
+        System.out.println("ADMIN PASSWORD REQUIRED");
+        String admin_pass_attempt = in.nextLine();
+        if(Objects.equals(admin_pass_attempt, admin_pass)) {
+            System.out.println("ACCESS GRANTED");
+            String adminCommands;
+            boolean running = true;
+            while(running){
+                System.out.println("A)dd-User R)emove-User Q)uit");
+                adminCommands = in.nextLine();
+                switch(adminCommands){
+                    case "A" -> {
+                        System.out.println("Create the new user ID");
+                        user_id = in.nextLine();
+                        if(!user_db.isValidId(user_id)){
+                            System.out.println("Invalid ID try again!");
+                            break;
+                        }
+                        System.out.println("Create the new password for that user");
+                        password = in.nextLine();
+                        if(!user_db.isValidPassword(password)){
+                            System.out.println("Invalid password try again!");
+                            break;
+                        }
+                        user_db.addUser(user_id, password);
+                        user_db.saveToFile();
+                        System.out.println("New user added!");
+                    }
+                    case "R" -> {
+                        System.out.println("Enter user ID for removal");
+                        user_id = in.nextLine();
+                        if(!user_db.isValidId(user_id)){
+                            System.out.println("Invalid ID try again!");
+                            break;
+                        }
+                        user_db.removeUser(user_id);
+                        user_db.saveToFile();
+                        System.out.println("User removed!");
+                    }
+                    case "Q" -> {
+                        running = false;
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void userAcess(){
+        boolean running = true;
+        String userCommandds;
+        while(running){
+            System.out.print("L)ogin Q)uit ~more functionality to be added~" );
+            userCommandds = in.nextLine();
+            switch(userCommandds){
+                case "L" -> {
+                    System.out.println("Enter your user id.");
+                    user_id = in.nextLine();
+                    System.out.println("Enter the user's password.");
+                    password = in.nextLine();
+                    if (user_db.login(user_id, password)) {
+                        System.out.println("login was successful");
+                    } else {
+                        System.out.println("login was unsuccessful");
+                    }
+                }
+                case "Q" -> {
+                    running = false;
+                }
+            }
+        }
+    }
 }
