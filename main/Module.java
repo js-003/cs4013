@@ -1,13 +1,18 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Module {
     private String moduleName;
     private String moduleCode;
+    private int semester;
+    private int credits;
     private ArrayList<Student> module;
 
-    public Module(String moduleName,String moduleCode){
+    public Module(String moduleName,String moduleCode,int semester, int credits ){
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
+        this.semester = semester;
+        this.credits = credits;
         module = new ArrayList<>();
     }
 
@@ -30,4 +35,9 @@ public class Module {
     public String StudentList(){
         return this.module.toString();
     }
+
+    public String toString(){
+        return Arrays.toString(module.toArray());
+    }
+
 }
