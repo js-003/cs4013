@@ -63,9 +63,7 @@ public class AccountDatabase {
     //Checks the criteria of the password given (formatting seen in the CLI)
     public boolean isValidPassword(String password) {
         //only a certain number of characters will be allowed for the password
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()?]).{8,64}$";
-
-        return password.matches(passwordRegex);
+        return password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()?]).{8,64}$");
     }
 
     public boolean isValidId(String id) {
