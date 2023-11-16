@@ -46,8 +46,8 @@ public class AccountDatabase {
         account_db.put(id, pass);
     }
 
-    public void removeUser(String id, String pass){
-        account_db.remove(id, pass);
+    public void removeUser(String id){
+        account_db.remove(id);
     }
     //saves changes made to the file: MAKE SURE THAT THE FILE IS IN A FOLDER WITH THE CODE OR GIVE THE PATH
     public void saveToFile() {
