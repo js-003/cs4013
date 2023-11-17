@@ -44,13 +44,15 @@ public class AccountDatabase {
 
     public void addUser(String id, String pass){
         account_db.put(id, pass);
+        this.saveToFile();
     }
 
     public void removeUser(String id){
         account_db.remove(id);
+        this.saveToFile();
     }
     //saves changes made to the file: MAKE SURE THAT THE FILE IS IN A FOLDER WITH THE CODE OR GIVE THE PATH
-    public void saveToFile() {
+    private void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file_name))) {
             for (Map.Entry<String, String> entry : account_db.entrySet()) {
                 writer.println(entry.getKey() + "," + entry.getValue());
