@@ -71,7 +71,6 @@ public class CLI {
                             break;
                         }
                         user_db.addUser(user_id, password);
-                        user_db.saveToFile();
                         System.out.println("New user added!");
                     }
                     case "R" -> {
@@ -82,7 +81,6 @@ public class CLI {
                             break;
                         }
                         user_db.removeUser(user_id);
-                        user_db.saveToFile();
                         System.out.println("User removed!");
                     }
                     case "Q" -> {
