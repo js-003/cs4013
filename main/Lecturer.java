@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Lecturer {
 
     private String firstName;
@@ -9,7 +7,7 @@ public class Lecturer {
     private String email;
     private String department;
 
-    public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email){
+    public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
         if(firstName.matches("[A-Z]\\w*")){
             this.firstName = firstName;
         }else throw new IllegalArgumentException("Check your first name");
@@ -25,6 +23,7 @@ public class Lecturer {
         if(email.matches(".*@\\w+.\\w+")) {
             this.email = email;
         }else throw new IllegalArgumentException("Incorrect Email");
+        this.department = department;
 
     }
 
@@ -65,5 +64,13 @@ public class Lecturer {
 
     public String toString(){
         return String.format("%s, %s, %s, %s, %s",this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

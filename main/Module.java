@@ -1,10 +1,11 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class Module {
     private String moduleName;
     private String moduleCode;
+
     private int semester;
+
     private int credits;
     private ArrayList<Student> module;
 
@@ -36,8 +37,16 @@ public class Module {
         return this.module.toString();
     }
 
+    public int getSemester() {
+        return semester;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
     public String toString(){
-        return Arrays.toString(module.toArray());
+        return Arrays.toString(module.toArray()).replace("[","").replace("]","");
     }
 
 }
