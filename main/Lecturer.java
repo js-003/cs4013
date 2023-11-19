@@ -63,7 +63,7 @@ public class Lecturer {
     }
 
     public String toString(){
-        return String.format("%s, %s, %s, %s, %s",this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
+        return String.format("%s,%s,%s,%s,%s",this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
     }
 
     public String getDepartment() {
