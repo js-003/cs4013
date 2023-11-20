@@ -7,6 +7,8 @@ public class Lecturer {
     private String email;
     private String department;
 
+    private int id;
+
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
         if(firstName.matches("[A-Z]\\w*")){
             this.firstName = firstName;
@@ -24,6 +26,7 @@ public class Lecturer {
             this.email = email;
         }else throw new IllegalArgumentException("Incorrect Email");
         this.department = department;
+        this.id = (int) ((Math.random())*99999);
 
     }
 
@@ -63,7 +66,7 @@ public class Lecturer {
     }
 
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s",this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
+        return String.format("%s,%s,%s,%s,%s,%s",String.valueOf(this.id),this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
     }
 
     public String getDepartment() {
