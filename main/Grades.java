@@ -9,22 +9,23 @@ public class Grades {
     }
 
     public void setResult(String ID, Integer result) {
+        this.results.put(ID, result);
     }
 
     public void delete() {
-
+        this.results = new HashMap<>();
     }
 
     public void delete(String ID) {
-
+        this.results.remove(ID);
     }
 
     public Integer getResult(String ID) {
-        return 0;
+        return this.results.get(ID);
     }
 
     public Integer getMaxResult() {
-        return 0;
+        return this.maxResult;
     }
 
     public HashMap<String, Integer> getResults() {
