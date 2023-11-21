@@ -89,6 +89,31 @@ public class Student {
         // For simplicity, a basic check for numeric characters is done
         return phone.matches("\\d+");
     }
+
+    public int getId(){
+        return id;
+    }
+    public String getFirst_Name(){
+        return first_Name;
+    }
+
+    public String getLast_Name() {
+        return last_Name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getBankDetails() {
+        return bankDetails;
+    }
+    /*note I do not have set methods for names an id's because im not accounting for people
+    who change their name and you cannot change your id after its created.
+     */
 }
-//going to add getters and setters later
-//trying to work out how to enusre an address is valid (maybe by zip/eir code?)
+
