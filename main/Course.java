@@ -1,5 +1,6 @@
+import main.Student;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Course {
     private String courseName;
@@ -38,7 +39,7 @@ public class Course {
                 return this.course.get(i);
             }
         }
-        return "No Student" + s.toString();
+        return "No main.Student" + s.toString();
     }
     public String toString(){
         return course.toString();

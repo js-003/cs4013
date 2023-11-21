@@ -1,3 +1,5 @@
+import main.Student;
+
 import java.util.*;
 
 public class Module {
