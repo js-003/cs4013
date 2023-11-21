@@ -11,6 +11,14 @@ public class Student {
     private String phone;
     private String bankDetails;
 
+    public Student(){
+
+    }
+    public Student(String first_Name,String last_Name,int id){
+        this.first_Name= first_Name;
+        this.last_Name=last_Name;
+        this.id = id;
+    }
     public Student(String first_Name, String last_Name, int id, String address, String email, String phone, String BankDetails) {
         this.first_Name = first_Name;
         this.last_Name = last_Name;
