@@ -27,7 +27,6 @@ public class Lecturer {
         }else throw new IllegalArgumentException("Incorrect Email");
         this.department = department;
         this.id = (int) ((Math.random())*99999);
-
     }
 
     public String getModuleCode(){
