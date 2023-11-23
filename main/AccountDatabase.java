@@ -29,7 +29,7 @@ public class AccountDatabase {
                     row[i] = row[i].trim().replace("\"", "");
                 }
                 //The below stores the id and password into a treemap
-                    account_db.put(row[0], row[1]);
+                account_db.put(row[0], row[1]);
 
             }
 
@@ -90,7 +90,7 @@ public class AccountDatabase {
 
     private String preformHashing(String pass){
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(pass.getBytes());
             byte[] resultByteArray = messageDigest.digest();
             StringBuilder sb = new StringBuilder();
@@ -102,6 +102,5 @@ public class AccountDatabase {
             e.printStackTrace();
             return null;
         }
-
     }
 }
