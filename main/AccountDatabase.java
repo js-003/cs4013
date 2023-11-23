@@ -1,3 +1,5 @@
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.io.*;
 import java.util.Objects;
@@ -27,9 +29,8 @@ public class AccountDatabase {
                     row[i] = row[i].trim().replace("\"", "");
                 }
                 //The below stores the id and password into a treemap
-                if(this.isValidId(row[0]) && this.isValidPassword(row[1])) {
                     account_db.put(row[0], row[1]);
-                }
+
             }
 
         } catch(IOException e) {
@@ -39,11 +40,11 @@ public class AccountDatabase {
     }
     // Check is the id key's value password matches pass(the inputted password)
     public boolean login(String id, String pass){
-        return Objects.equals(account_db.get(id), pass);
+        return Objects.equals(account_db.get(id), preformHashing(pass));
     }
 
-    public void addUser(String id, String pass){
-        account_db.put(id, pass);
+    public void addUser(String idOrUsername, String pass){
+        account_db.put(idOrUsername, preformHashing(pass));
         this.saveToFile();
     }
 
@@ -67,11 +68,15 @@ public class AccountDatabase {
         //only a certain number of characters will be allowed for the password
         return password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()?]).{8,64}$");
     }
-
+    //Checks the criteria of the id given (formatting seen in the CLI)
     public boolean isValidId(String id) {
         //eight digits in an id
-        String idRegex = "^\\d{8}$";
-        return id.matches(idRegex);
+        return id.matches( "^\\d{8}$");
+    }
+
+    public boolean isValidUsername(String user) {
+        //username for the staff login should be seperated by a dot e.g "michael.english"
+        return user.matches(".*\\..*");
     }
 
     // testing stuff which I have used to help with fixing bugs
@@ -81,5 +86,22 @@ public class AccountDatabase {
             holder.append(entry.getKey()).append("    ").append(entry.getValue()).append("\n");
         }
         return holder.toString();
+    }
+
+    private String preformHashing(String pass){
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(pass.getBytes());
+            byte[] resultByteArray = messageDigest.digest();
+            StringBuilder sb = new StringBuilder();
+            for(byte b : resultByteArray){
+                sb.append(String.format("%02x" , b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
