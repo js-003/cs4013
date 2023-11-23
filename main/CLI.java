@@ -1,10 +1,6 @@
-import java.util.Objects;
-import java.util.Scanner;
+{
 
-
-public class CLI {
-
-    private String user_id;
+    private String user;
     private String password;
     //Admin password for restricted access
     private String admin_pass = "TestingStuff123?";
@@ -18,7 +14,7 @@ public class CLI {
             String command = in.nextLine();
             switch (command) {
                 case "U" -> {
-                    userAcess();
+                    userAccess();
                 }
                 case "F" -> {
                     System.out.println("""
@@ -58,10 +54,10 @@ public class CLI {
                 adminCommands = in.nextLine();
                 switch(adminCommands){
                     case "A" -> {
-                        System.out.println("Create the new user ID");
-                        user_id = in.nextLine();
-                        if(!user_db.isValidId(user_id)){
-                            System.out.println("Invalid ID try again!");
+                        System.out.println("Create the new user ID or Username");
+                        user = in.nextLine();
+                        if(!user_db.isValidId(user) && !user_db.isValidUsername(user)){
+                            System.out.println("Invalid ID or Username try again!");
                             break;
                         }
                         System.out.println("Create the new password for that user");
@@ -70,17 +66,17 @@ public class CLI {
                             System.out.println("Invalid password try again!");
                             break;
                         }
-                        user_db.addUser(user_id, password);
+                        user_db.addUser(user, password);
                         System.out.println("New user added!");
                     }
                     case "R" -> {
                         System.out.println("Enter user ID for removal");
-                        user_id = in.nextLine();
-                        if(!user_db.isValidId(user_id)){
-                            System.out.println("Invalid ID try again!");
+                        user = in.nextLine();
+                        if(!user_db.isValidId(user) && !user_db.isValidUsername(user)){
+                            System.out.println("Invalid ID or Username try again!");
                             break;
                         }
-                        user_db.removeUser(user_id);
+                        user_db.removeUser(user);
                         System.out.println("User removed!");
                     }
                     case "Q" -> {
@@ -92,7 +88,7 @@ public class CLI {
 
     }
 
-    public void userAcess(){
+    public void userAccess(){
         boolean running = true;
         String userCommandds;
         while(running){
@@ -101,10 +97,10 @@ public class CLI {
             switch(userCommandds){
                 case "L" -> {
                     System.out.println("Enter your user id.");
-                    user_id = in.nextLine();
+                    user = in.nextLine();
                     System.out.println("Enter the user's password.");
                     password = in.nextLine();
-                    if (user_db.login(user_id, password)) {
+                    if (user_db.login(user, password)) {
                         System.out.println("login was successful");
                     } else {
                         System.out.println("login was unsuccessful");
