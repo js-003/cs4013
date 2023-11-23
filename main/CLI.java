@@ -1,5 +1,8 @@
-{
+import java.util.Objects;
+import java.util.Scanner;
 
+
+public class CLI{
     private String user;
     private String password;
     //Admin password for restricted access
