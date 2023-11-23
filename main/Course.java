@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Course {
     private String graduateLevel;
+    private String degree;
     private String courseName;
     private String courseCode;
     private int year;
@@ -44,10 +45,11 @@ public class Course {
     }
 
     public void graduateLevel(String level){
-        if(level.equalsIgnoreCase("undergraduate")){
-
-        }else if(level.equalsIgnoreCase("masters")){
-
+        this.degree = level;
+        if(level.toLowerCase().contains("bachelor")){
+            this.graduateLevel = "Undergraduate";
+        }else if(level.toLowerCase().contains("masters")){
+            this.graduateLevel = "Masters";
         }else this.graduateLevel = "Postgraduate";
     }
     public String toString(){
