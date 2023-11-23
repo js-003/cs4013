@@ -9,7 +9,7 @@ public class Lecturer {
     private String email;
     private String department;
 
-    private final ArrayList<String> listId = new ArrayList<>();
+    private final ArrayList<Integer> listId = new ArrayList<>();
     private int id;
 
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
