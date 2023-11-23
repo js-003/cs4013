@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Lecturer {
 
     private String firstName;
@@ -7,6 +9,7 @@ public class Lecturer {
     private String email;
     private String department;
 
+    private final ArrayList<String> listId = new ArrayList<>();
     private int id;
 
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
@@ -26,7 +29,12 @@ public class Lecturer {
             this.email = email;
         }else throw new IllegalArgumentException("Incorrect Email");
         this.department = department;
-        this.id = (int) ((Math.random())*99999);
+        int newID = (int) ((Math.random())*99999);
+        while(listId.contains(newID)){
+            newID = (int) ((Math.random())*99999);
+        }
+        this.id = newID;
+
     }
 
     public String getModuleCode(){
@@ -76,8 +84,5 @@ public class Lecturer {
         this.department = department;
     }
 
-    public static void main(String[] args) {
-        Lecturer N = new Lecturer("jakub","sokal","CS4023","+353894525922","JS@gm.c","Science");
-    }
 
 }
