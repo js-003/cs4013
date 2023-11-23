@@ -10,10 +10,10 @@ public class Lecturer {
     private int id;
 
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
-        if(firstName.matches("[A-Z]\\w*")){
+        if(firstName.matches("[a-z A-Z]\\w*")){
             this.firstName = firstName;
         }else throw new IllegalArgumentException("Check your first name");
-        if(surname.matches("[A-Z]\\w*")) {
+        if(surname.matches("[a-z A-Z]\\w*")) {
             this.surname = surname;
         }else throw new IllegalArgumentException("Check your last name");
         if(Character.isLetter(moduleCode.charAt(0))&&Character.isLetter(moduleCode.charAt(1))&& moduleCode.matches("\\w{2}\\d{4}")){
@@ -65,7 +65,7 @@ public class Lecturer {
     }
 
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s,%s",String.valueOf(this.id),this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
+        return String.format("%s,%s,%s,%s,%s,%s",this.id,this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
     }
 
     public String getDepartment() {
@@ -75,4 +75,9 @@ public class Lecturer {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public static void main(String[] args) {
+        Lecturer N = new Lecturer("jakub","sokal","CS4023","+353894525922","JS@gm.c","Science");
+    }
+
 }
