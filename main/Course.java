@@ -53,9 +53,4 @@ public class Course {
     public String toString(){
         return course.toString();
     }
-
-    public static void main(String[] args) {
-        Course m = new Course("LM051","CS",2);
-        Student me = new Student("Jakub","Sokal",)
-    }
 }
