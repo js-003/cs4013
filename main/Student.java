@@ -1,4 +1,3 @@
-package main;
 
 import java.util.Random;
 
@@ -93,11 +92,11 @@ public class Student {
     public int getId(){
         return id;
     }
-    public String getFirst_Name(){
+    public String getFirstName(){
         return first_Name;
     }
 
-    public String getLast_Name() {
+    public String getLastName() {
         return last_Name;
     }
 
