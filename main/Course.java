@@ -6,16 +6,17 @@ public class Course {
     private String graduateLevel;
     private String degree;
     private String courseName;
-    private String courseCode;
-    private int year;
+    private final String courseCode;
+
+    private final int yearOfStudy;
 
     private ArrayList<String> course;
 
-    public Course(String courseCode,String courseName, int year){
+    public Course(String courseCode, String courseName, int yearOfStudy){
         course = new ArrayList<>();
         this.courseCode = courseCode;
         this.courseName = courseName;
-        this.year = year;
+        this.yearOfStudy = yearOfStudy;
     }
 
     public void setCourseName(String newCourseName){
@@ -54,5 +55,21 @@ public class Course {
     }
     public String toString(){
         return course.toString();
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public String getGraduateLevel() {
+        return graduateLevel;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public int getYearOfStudy() {
+        return yearOfStudy;
     }
 }
