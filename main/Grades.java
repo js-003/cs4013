@@ -1,8 +1,18 @@
 import java.util.HashMap;
 
 public class Grades {
-    private HashMap<String, Integer> results = new HashMap<>();
-    private Integer maxResult = 0;
+    private HashMap<String, Integer> results;
+    private Integer maxResult;
+
+    public Grades() {
+        this.results = new HashMap<>();
+        this.maxResult = 0;
+    }
+
+    public Grades(Integer maxResult) {
+        this.results = new HashMap<>();
+        this.maxResult = maxResult;
+    }
 
     public void setMaxResult(Integer maxResult) {
         this.maxResult = maxResult;
