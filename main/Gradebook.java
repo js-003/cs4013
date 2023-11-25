@@ -1,11 +1,16 @@
 import java.util.HashMap;
 
 public class Gradebook {
-    private final HashMap<String, Grades> grades = new HashMap<>();
+    private final HashMap<String, Grades> grades;
+
+    public Gradebook() {
+        this.grades = new HashMap<>();
+    }
 
     public void addGrade(String test, Grades results) {
         this.grades.put(test, results);
     }
+
     public Double getAverage(String test) {
         Integer total = 0;
         Grades results = grades.get(test);
