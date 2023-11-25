@@ -30,4 +30,43 @@ public class Gradebook {
         }
         return (double) (total/this.grades.values().size());
     }
+
+    public GradeType getStudentGrade(String ID) {
+        Double average = getStudentAverage(ID);
+        if (average > 80) {
+            return GradeType.A1;
+        }
+        if (average > 72) {
+            return GradeType.A2;
+        }
+        if (average > 64) {
+            return GradeType.B1;
+        }
+        if (average > 60) {
+            return GradeType.B2;
+        }
+        if (average > 56) {
+            return GradeType.B3;
+        }
+        if (average > 52) {
+            return GradeType.C1;
+        }
+        if (average > 48) {
+            return GradeType.C2;
+        }
+        if (average > 40) {
+            return GradeType.C3;
+        }
+        if (average > 35) {
+            return GradeType.D1;
+        }
+        if (average > 30) {
+            return GradeType.D2;
+        }
+        if (average > 0) {
+            return GradeType.F;
+        }
+        return GradeType.NG;
+    }
+
 }
