@@ -1,10 +1,9 @@
-package main;
 
 import java.util.Random;
 
 public class Student {
-    private String firstName;
-    private String surname;
+    private String first_Name;
+    private String last_Name;
     private int id; //when creating student ask them to enter year of study as their id and then use this to generate them an id?
     private String address;
     private String email;
@@ -14,15 +13,15 @@ public class Student {
     public Student(){
 
     }
-    public Student(String firstName,String surname,int id){
-        this.firstName= firstName;
-        this.surname=surname;
+    public Student(String first_Name,String last_Name,int id){
+        this.first_Name= first_Name;
+        this.last_Name=last_Name;
         this.id = id;
     }
-    public Student(String firstName, String surname, int id, String address, String email, String phone, String BankDetails) {
-        this.firstName = firstName;
-        this.surname = surname;
-        this.id = id; //do i remove id as a parameter and then just generate one? or do i allow them to enter an id number and reset it later
+    public Student(String first_Name, String last_Name, int id, String address, String email, String phone, String BankDetails) {
+        this.first_Name = first_Name;
+        this.last_Name = last_Name;
+        this.id = id; //do i remove id as a paramter and then just generate one? or do i allow them to enter an id number and reset it later
         this.address = address;
         this.email = email;
         this.phone = phone;
@@ -94,11 +93,11 @@ public class Student {
         return id;
     }
     public String getFirstName(){
-        return firstName;
+        return first_Name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return last_Name;
     }
 
     public String getAddress() {

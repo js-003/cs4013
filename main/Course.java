@@ -1,5 +1,3 @@
-import main.Student;
-
 import java.util.ArrayList;
 
 public class Course {
