@@ -2,7 +2,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 
-public class CLI{
+public class CLI {
+
     private String user;
     private String password;
     //Admin password for restricted access
@@ -10,6 +11,18 @@ public class CLI{
     Scanner in = new Scanner(System.in);
     AccountDatabase user_db = new AccountDatabase("Account.csv");
     public void run() {
+        System.out.println("""
+                ############################################################
+                
+                U   U  L            PPPP    OOO   RRRR   TTTTT   AAA   L    
+                U   U  L            P   P  O   O  R   R    T    A   A  L    
+                U   U  L            PPPP   O   O  RRRR     T    AAAAA  L    
+                U   U  L            P      O   O  R R      T    A   A  L    
+                 UUU   LLLLL        P       OOO   R  RR    T    A   A  LLLLL
+                
+                ############################################################
+                """);
+
         boolean running = true;
         System.out.println(user_db.toString());
         while (running) {
