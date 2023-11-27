@@ -1,5 +1,7 @@
 package main;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Student {
@@ -10,19 +12,12 @@ public class Student {
     private String email;
     private String phone;
     private String bankDetails;
+    private ArrayList<Integer> idList = new ArrayList<>();
 
-    public Student(){
 
-    }
-    public Student(String firstName,String surname,int id){
-        this.firstName= firstName;
-        this.surname=surname;
-        this.id = id;
-    }
-    public Student(String firstName, String surname, int id, String address, String email, String phone, String BankDetails) {
+    public Student(String firstName, String surname, String address, String email, String phone, String BankDetails) {
         this.firstName = firstName;
         this.surname = surname;
-        this.id = id; //do i remove id as a parameter and then just generate one? or do i allow them to enter an id number and reset it later
         this.address = address;
         this.email = email;
         this.phone = phone;
@@ -32,20 +27,21 @@ public class Student {
 
     // Method to generate a student ID
     public int generateStudentId(int yearOfStudy) { //or the original id they insert=yearOfstudy
-        // to get last two digits from the year of study
-        int lastTwoDigits = yearOfStudy % 100;
+        LocalDate t = LocalDate.now();
+        String id = ""+t.toString().charAt(2) + t.toString().charAt(3);
+        boolean checker = true;
+        while(checker) {
+            int i;
+            for (i = 2; i < 8; i++) {
 
-        // Generate random 6-digit number
-        Random random = new Random();
-        int randomSixDigits = random.nextInt(900000) + 100000; // all 6 digit number are between 100000 upto (not including) 1,000,000
+                id +=((int) (Math.random() * 10));
+            }
+            if (!idList.contains(id.toString())) {
+                checker = false;
 
-        // to add last two digits to randomSixDigits
-        int studentId = (lastTwoDigits * 1000000) + randomSixDigits; //ensures they are the first 2 digits in the id
+            }else i = 0;
+        }
 
-        // Set the generated ID to be the new id
-        this.id = studentId;
-        return id;
-        //need to add a check if already exists but not 100% because this class describes 1 student not all students.
     }
 
     // Method to change email
