@@ -8,10 +8,14 @@ public class Course {
 
     private final int yearOfStudy;
 
-    private ArrayList<String> course;
+    private ArrayList<Student> studentList;
+
+    private ArrayList<String> moduleList;
+    private ArrayList<Semester> semester;
 
     public Course(String courseCode, String courseName, int yearOfStudy){
-        course = new ArrayList<>();
+        studentList = new ArrayList<>();
+        moduleList = new ArrayList<>();
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.yearOfStudy = yearOfStudy;
@@ -26,18 +30,18 @@ public class Course {
     }
 
     public void addStudent(Student s){
-        this.course.add(s.getId()+" "+s.getFirstName()+" "+s.getLastName());
+        this.studentList.add(s);
     }
 
     public void removeStudent(Student s){
-        this.course.remove(s.toString());
+        this.studentList.remove(s);
     }
 
     public String getStudent(Student s){
         String c = s.getId()+" "+s.getFirstName()+" "+s.getLastName();
-        for (String string : course) {
-            if (c.matches(string)) {
-                return string;
+        for (Student string : studentList) {
+            if (c.matches(string.toString())) {
+                return string.toString();
             }
         }
         return "No Student " + s.toString();
@@ -51,8 +55,13 @@ public class Course {
             this.graduateLevel = "Masters";
         }else this.graduateLevel = "Postgraduate";
     }
-    public String toString(){
-        return course.toString();
+
+    public String getStudentList(){
+        return studentList.toString();
+    }
+
+    public String getModuleList(){
+        return moduleList.toString();
     }
 
     public String getDegree() {
@@ -69,5 +78,17 @@ public class Course {
 
     public int getYearOfStudy() {
         return yearOfStudy;
+    }
+
+    public void addModule(Module m){
+        moduleList.add(m.getModuleName());
+    }
+
+    public void addSemester(Semester s){
+        semester.add(s);
+    }
+
+    public String getSemesters(){
+        return String.format("%s, %s",moduleList,studentList);
     }
 }
