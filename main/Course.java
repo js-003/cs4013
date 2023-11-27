@@ -16,6 +16,7 @@ public class Course {
     public Course(String courseCode, String courseName, int yearOfStudy){
         studentList = new ArrayList<>();
         moduleList = new ArrayList<>();
+        semester = new ArrayList<>();
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.yearOfStudy = yearOfStudy;
@@ -89,6 +90,10 @@ public class Course {
     }
 
     public String getSemesters(){
-        return String.format("%s, %s",moduleList,studentList);
+        return semester.toString();
+    }
+
+    public String toString(){
+        return String.format("Course Name: %s\nCourse Code: %s\nSemester: %s\nModule List: %s\nStudent List: %s",getCourseName(),getCourseCode(),getSemesters(),getModuleList(),getStudentList());
     }
 }

@@ -21,7 +21,7 @@ public class Student {
     public Student(String first_Name, String last_Name, int id, String address, String email, String phone, String BankDetails) {
         this.first_Name = first_Name;
         this.last_Name = last_Name;
-        this.id = id; //do i remove id as a paramter and then just generate one? or do i allow them to enter an id number and reset it later
+        this.id = id;
         this.address = address;
         this.email = email;
         this.phone = phone;
