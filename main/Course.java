@@ -1,21 +1,24 @@
-import main.Student;
-
 import java.util.ArrayList;
 
 public class Course {
     private String graduateLevel;
     private String degree;
     private String courseName;
-    private String courseCode;
-    private int year;
+    private final String courseCode;
 
-    private ArrayList<String> course;
+    private final int yearOfStudy;
 
-    public Course(String courseCode,String courseName, int year){
-        course = new ArrayList<>();
+    private ArrayList<Student> studentList;
+
+    private ArrayList<String> moduleList;
+    private ArrayList<Semester> semester;
+
+    public Course(String courseCode, String courseName, int yearOfStudy){
+        studentList = new ArrayList<>();
+        moduleList = new ArrayList<>();
         this.courseCode = courseCode;
         this.courseName = courseName;
-        this.year = year;
+        this.yearOfStudy = yearOfStudy;
     }
 
     public void setCourseName(String newCourseName){
@@ -27,18 +30,18 @@ public class Course {
     }
 
     public void addStudent(Student s){
-        this.course.add(s.getId()+" "+s.getFirstName()+" "+s.getLastName());
+        this.studentList.add(s);
     }
 
     public void removeStudent(Student s){
-        this.course.remove(s.toString());
+        this.studentList.remove(s);
     }
 
     public String getStudent(Student s){
         String c = s.getId()+" "+s.getFirstName()+" "+s.getLastName();
-        for (String string : course) {
-            if (c.matches(string)) {
-                return string;
+        for (Student string : studentList) {
+            if (c.matches(string.toString())) {
+                return string.toString();
             }
         }
         return "No Student " + s.toString();
@@ -52,7 +55,40 @@ public class Course {
             this.graduateLevel = "Masters";
         }else this.graduateLevel = "Postgraduate";
     }
-    public String toString(){
-        return course.toString();
+
+    public String getStudentList(){
+        return studentList.toString();
+    }
+
+    public String getModuleList(){
+        return moduleList.toString();
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public String getGraduateLevel() {
+        return graduateLevel;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public int getYearOfStudy() {
+        return yearOfStudy;
+    }
+
+    public void addModule(Module m){
+        moduleList.add(m.getModuleName());
+    }
+
+    public void addSemester(Semester s){
+        semester.add(s);
+    }
+
+    public String getSemesters(){
+        return String.format("%s, %s",moduleList,studentList);
     }
 }
