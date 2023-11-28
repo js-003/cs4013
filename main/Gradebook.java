@@ -12,10 +12,6 @@ public class Gradebook {
         grades.put(studentID,g);
     }
 
-    public void getTestResult(String testName){
-
-    }
-
     public String toString(){
         return grades.toString();
     }
