@@ -69,7 +69,7 @@ public class CLI {
         }
     }
 
-    private void adminAccess(){
+    private void adminAccess1(){
         System.out.println("ADMIN PASSWORD REQUIRED");
         String admin_pass_attempt = in.nextLine();
         if(Objects.equals(admin_pass_attempt, admin_pass)) {
@@ -115,7 +115,7 @@ public class CLI {
 
     }
 
-    public void userAccess(){
+    public void studentAccess(){
         boolean running = true;
         String userCommandds;
         while(running){
@@ -142,7 +142,7 @@ public class CLI {
 
 
     //JAKUB
-    private void adminAccess1(){
+    private void adminAccess(){
         System.out.println("ADMIN PASSWORD REQUIRED");
         String admin_pass_attempt = in.nextLine();
         if(Objects.equals(admin_pass_attempt, admin_pass)) {
@@ -192,28 +192,67 @@ public class CLI {
                 case "M" -> {
                     System.out.println("Enter Module Code");
                     String moduleCode = in.nextLine();
+                    boolean checker = true;
+                    while (checker) {
+                        if (!Character.isLetter(moduleCode.charAt(0)) && Character.isLetter(moduleCode.charAt(1)) && moduleCode.matches("\\w{2}\\d{4}")){
+                            System.out.println("Enter Module Code");
+                            moduleCode = in.nextLine();
+                        }else  checker = false;
+                    }
                     System.out.println("Enter Module Name");
                     String moduleName = in.nextLine();
-                    System.out.println("Enter Module Semester");
-                    String moduleSemester = in.nextLine();
                     System.out.println("Enter Module Credit");
                     String moduleCredits = in.nextLine();
-                    module = new Module(moduleName,moduleCode,Integer.parseInt(moduleSemester),Integer.parseInt(moduleCredits));
+                    module = new Module(moduleName,moduleCode,Integer.parseInt(moduleCredits));
                 }
                 case "L" -> {
                     System.out.println("Enter Lecturer Name");
                     String firstName = in.nextLine();
+                    boolean checker = true;
+                    while (checker) {
+                        if (!firstName.matches("[a-z A-Z]\\w*")) {
+                            System.out.println("Check Lecturer Name - Format[Name Must Contain: First Letter Is Capital, If Needed DO NOT USE SPACES use -");
+                            firstName = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
                     System.out.println("Enter Lecturer Surname");
                     String surname = in.nextLine();
+                    while (checker) {
+                        if (!surname.matches("[a-z A-Z]\\w*")) {
+                            System.out.println("Enter Lecturer Surname");
+                            surname = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
                     System.out.println("Enter Lecturer Module Code");
                     String moduleCode = in.nextLine();
+                    while (checker) {
+                        if (!Character.isLetter(moduleCode.charAt(0)) && Character.isLetter(moduleCode.charAt(1)) && moduleCode.matches("\\w{2}\\d{4}")) {
+                            System.out.println("Enter Lecturer Surname");
+                            moduleCode = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
                     System.out.println("Enter Lecturer Phone Number");
                     String phoneNumber = in.nextLine();
+                    while (checker) {
+                        if (!phoneNumber.matches("[+]\\w{2,3}\\w{9,12}")) {
+                            System.out.println("Enter Lecturer Phone Number");
+                            phoneNumber = in.nextLine();
+                        }else  checker = false;
+                    }
                     System.out.println("Enter Lecturer Email");
                     String email = in.nextLine();
-                    System.out.println("Enter Lecturer Department");
-                    String department = in.nextLine();
-                    lecturer = new Lecturer(firstName,surname,moduleCode,phoneNumber,email,department);
+                    while (checker) {
+                        if (!email.matches(".*@\\w+.\\w+")) {
+                            System.out.println("Enter Lecturer Email");
+                            email = in.nextLine();
+                        }else  checker = false;
+                        System.out.println("Enter Lecturer Department");
+                        String department = in.nextLine();
+                        lecturer = new Lecturer(firstName, surname, moduleCode, phoneNumber, email, department);
+                    }
                 }
                 case "S" -> {
                     System.out.println("Enter Student Name");
@@ -230,19 +269,22 @@ public class CLI {
                     String department = in.nextLine();
                     lecturer = new Lecturer(firstName,surname,moduleCode,phoneNumber,email,department);
                 }
+                case "Q" -> {
+                    running = false;
+                }
             }
         }
     }
 
     private void lecturerLoggedOn(){
-        boolean checker = true;
+        boolean running = true;
         String userCommands;
-        while(checker){
+        while(running){
             System.out.print("S)how-Student-List G)rade-Student Q)uit");
             userCommands = in.nextLine();
             switch (userCommands) {
                 case "S" -> {
-                    System.out.println(course.getStudentList());
+                    System.out.println(module);
                 }
                 case "G" -> {
                     System.out.println("Enter Student ID");
@@ -254,14 +296,17 @@ public class CLI {
                     grade = new Grades(testName,Double.parseDouble(result));
                     gradebook.addTestResult(sId,grade);
                 }
+                case "Q" -> {
+                    running = false;
+                }
             }
         }
     }
 
     private void lecturerAccess() {
-        boolean checker = true;
+        boolean running = true;
         String userCommands;
-        while (checker) {
+        while (running) {
             System.out.print("L)ogin Q)uit");
             userCommands = in.nextLine();
             switch (userCommands) {
@@ -276,7 +321,7 @@ public class CLI {
                     } else System.out.println("Log on was unsuccessful");
                 }
                 case "Q" -> {
-                    checker = false;
+                    running = false;
                 }
             }
         }

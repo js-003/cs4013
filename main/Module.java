@@ -11,10 +11,9 @@ public class Module {
     private int credits;
     private ArrayList<Student> module;
 
-    public Module(String moduleName, String moduleCode,int semester, int credits ){
+    public Module(String moduleName, String moduleCode, int credits ){
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
-        this.semester = semester;
         this.credits = credits;
         module = new ArrayList<>();
     }

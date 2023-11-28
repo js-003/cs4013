@@ -13,15 +13,11 @@ public class Lecturer {
     private int id;
 
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
-        isValidFirstName(firstName);
-
-        isValidSurname(surname);
-
-        isValidModuleCode(moduleCode);
-
-        isValidPhoneNumber(phoneNumber);
-
-        isValidEmail(email);
+        this.firstName = firstName;
+        this.surname = surname;
+        this.moduleCode = moduleCode;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.department = department;
         int newID = (int) ((Math.random())*99999);
         while(listId.contains(newID)){
@@ -30,36 +26,6 @@ public class Lecturer {
         this.id = newID;
 
     }
-
-    public void isValidFirstName(String name){
-        if(name.matches("[a-z A-Z]\\w*")){
-            this.firstName = name;
-        }else throw new IllegalArgumentException("Check your First Name");
-    }
-
-    public void isValidSurname(String name){
-        if(name.matches("[a-z A-Z]\\w*")){
-            this.surname= name;
-        }else throw new IllegalArgumentException("Check your Surame");
-    }
-    public void isValidModuleCode(String code){
-        if(Character.isLetter(moduleCode.charAt(0))&&Character.isLetter(moduleCode.charAt(1))&& moduleCode.matches("\\w{2}\\d{4}")){
-            this.moduleCode = moduleCode;
-        }else throw new IllegalArgumentException("Incorrect Module Code");
-    }
-
-    public void isValidPhoneNumber(String phoneNumber){
-        if(phoneNumber.matches("[+]\\w{2,3}\\w{9,12}")){
-            this.phoneNumber = phoneNumber;
-        }else throw new IllegalArgumentException("Incorrect Phone Number");
-    }
-
-    public void isValidEmail(String email){
-        if(email.matches(".*@\\w+.\\w+")) {
-            this.email = email;
-        }else throw new IllegalArgumentException("Incorrect Email");
-    }
-
 
     public String getModuleCode(){
         return this.moduleCode;

@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Gradebook {
 
-    private final HashMap<String, Grades> grades;
+    private HashMap<String, Grades> grades;
 
     public Gradebook(){
         grades  = new HashMap<>();
@@ -16,5 +16,8 @@ public class Gradebook {
         return grades.toString();
     }
 
+    public void setGrade(String studentID,String testName ,double newResult){
+        grades.put(studentID,new Grades(testName,newResult));
+    }
 
 }
