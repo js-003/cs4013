@@ -1,50 +1,51 @@
 
-import java.util.Random;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 
 public class Student {
-    private String first_Name;
-    private String last_Name;
-    private int id; //when creating student ask them to enter year of study as their id and then use this to generate them an id?
+    private String firstName;
+    private String lastName;
+    private String id; //when creating student ask them to enter year of study as their id and then use this to generate them an id?
     private String address;
     private String email;
     private String phone;
     private String bankDetails;
+    private ArrayList<String> idList = new ArrayList<>();
 
-    public Student(){
 
-    }
-    public Student(String first_Name,String last_Name,int id){
-        this.first_Name= first_Name;
-        this.last_Name=last_Name;
-        this.id = id;
-    }
-    public Student(String first_Name, String last_Name, int id, String address, String email, String phone, String BankDetails) {
-        this.first_Name = first_Name;
-        this.last_Name = last_Name;
-        this.id = id; //do i remove id as a paramter and then just generate one? or do i allow them to enter an id number and reset it later
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-
+    //student constructor
+    public Student(String firstName, String lastName, String address, String email, String phone, String BankDetails) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address=address;
+        this.email=email;
+        this.phone=phone;
+        this.bankDetails =bankDetails;
 
     }
+
+
 
     // Method to generate a student ID
-    public int generateStudentId(int yearOfStudy) { //or the original id they insert=yearOfstudy
-        // to get last two digits from the year of study
-        int lastTwoDigits = yearOfStudy % 100;
+    public void generateStudentId() { //or the original id they insert=yearOfstudy
+        LocalDate t = LocalDate.now();
+        String id = ""+t.toString().charAt(2) + t.toString().charAt(3);
+        boolean checker = true;
+        while(checker) {
+            int i;
+            for (i = 2; i < 8; i++) {
 
-        // Generate random 6-digit number
-        Random random = new Random();
-        int randomSixDigits = random.nextInt(900000) + 100000; // all 6 digit number are between 100000 upto (not including) 1,000,000
+                id +=((int) (Math.random() * 10));
+            }
+            if (!idList.contains(id.toString())) {
+                checker = false;
 
-        // to add last two digits to randomSixDigits
-        int studentId = (lastTwoDigits * 1000000) + randomSixDigits; //ensures they are the first 2 digits in the id
+            }else i = 0;
 
-        // Set the generated ID to be the new id
-        this.id = studentId;
-        return id;
-        //need to add a check if already exists but not 100% because this class describes 1 student not all students.
+        }idList.add(id.toString());
+        this.id=id.toString();
+
     }
 
     // Method to change email
@@ -89,15 +90,15 @@ public class Student {
         return phone.matches("\\d+");
     }
 
-    public int getId(){
+    public String getId(){
         return id;
     }
     public String getFirstName(){
-        return first_Name;
+        return firstName;
     }
 
     public String getLastName() {
-        return last_Name;
+        return lastName;
     }
 
     public String getAddress() {
