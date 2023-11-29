@@ -1,4 +1,7 @@
-mport java.util.HashMap;
+
+
+//btw I was meant to send this discord as something that could potentially function and trying to get rid of it
+import java.util.HashMap;
 import java.util.ArrayList;
 public class Grades {
     private static int[] percentage = {0,30,35,40,48,52,56,60,64,72,80};
