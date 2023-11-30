@@ -1,45 +1,70 @@
-
-
-//btw I was meant to send this discord as something that could potentially function and trying to get rid of it
 import java.util.HashMap;
-import java.util.ArrayList;
+
+/**
+ * This class is for storing class results for a single test/exam.
+ */
 public class Grades {
-    private static int[] percentage = {0,30,35,40,48,52,56,60,64,72,80};
-    private String[] gradeText = {"F","D2","D1","C3","C2","C1","B3","B2","B1","A2","A1"};
+    // Store results for each student
+    private HashMap<String, Double> results;
 
-    private HashMap<String, ArrayList<Object>> results = new HashMap<>();
-    private double[] gcaScore = {0.00, 1.20, 1.60, 2.00, 2.40, 2.60, 2.80, 3.00, 3.20, 3.60, 4.00};
 
-    public Grades(String testName,double result){
-        ArrayList<Object> info = new ArrayList<>();
-        info.add(gradeConvert(result));
-        info.add(scoreConvert(result));
-        results.put(testName, info);
+    public Grades() {
+        this.results = new HashMap<>();
     }
 
-    public String gradeConvert(double result){
-        for(int i = percentage.length-1; i>-1;i--){
-            if(result>=percentage[i]){
-                return gradeText[i];
-            }
-        }
-        return "NG";
+
+    public Grades(String testName, double parseDouble) {
+        setResult(testName, parseDouble);
     }
 
-    public double scoreConvert(double result){
-        for(int i = percentage.length-1; i>-1;i--){
-            if(result>=percentage[i]){
-                return gcaScore[i];
-            }
-        }
-        return 0.00;
+
+    /**
+     * Set the result for an specific student identified by their ID.
+     *
+     * @param ID     The student's ID.
+     * @param result The result obtained by the student in an exam.
+     */
+    public void setResult(String ID, double result) {
+        this.results.put(ID, result);
     }
 
-    public String giveIGrade(){
-        return "I (Repeat Exam)";
+    /**
+     * Delete all stored results.
+     */
+    public void delete() {
+        this.results = new HashMap<>();
     }
 
-    public String toString(){
-        return results.toString();
+    /**
+     * Delete a student's data for an exam.
+     *
+     * @param ID A student's ID
+     */
+    public void delete(String ID) {
+        this.results.remove(ID);
+    }
+
+    /**
+     * Get a student's data for an exam.
+     *
+     * @param ID A student's ID
+     */
+    public Double getResult(String ID) {
+        return this.results.get(ID);
+    }
+
+    /**
+     * Get a map with all stored results, where each entry represents a student and their result
+     *
+     * @return A map containing all stored results.
+     */
+    public HashMap<String, Double> getResults() {
+        return results;
+    }
+
+    public Double setIGrade() {
+        return 0.0;
     }
 }
+
+
