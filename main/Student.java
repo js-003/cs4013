@@ -2,6 +2,8 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import java.util.List;
+
 
 public class Student {
     private String firstName;
@@ -11,40 +13,40 @@ public class Student {
     private String email;
     private String phone;
     private String bankDetails;
-    private ArrayList<String> idList = new ArrayList<>();
+    private static ArrayList<String> idList = new ArrayList<>();
 
 
     //student constructor
     public Student(String firstName, String lastName, String address, String email, String phone, String BankDetails) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address=address;
-        this.email=email;
-        this.phone=phone;
-        this.bankDetails =bankDetails;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.bankDetails = bankDetails;
 
     }
-
 
 
     // Method to generate a student ID
     public void generateStudentId() { //or the original id they insert=yearOfstudy
         LocalDate t = LocalDate.now();
-        String id = ""+t.toString().charAt(2) + t.toString().charAt(3);
+        String id = "" + t.toString().charAt(2) + t.toString().charAt(3);
         boolean checker = true;
-        while(checker) {
+        while (checker) {
             int i;
             for (i = 2; i < 8; i++) {
 
-                id +=((int) (Math.random() * 10));
+                id += ((int) (Math.random() * 10));
             }
             if (!idList.contains(id.toString())) {
                 checker = false;
 
-            }else i = 0;
+            } else i = 0;
 
-        }idList.add(id.toString());
-        this.id=id.toString();
+        }
+        idList.add(id.toString());
+        this.id = id.toString();
 
     }
 
@@ -90,10 +92,11 @@ public class Student {
         return phone.matches("\\d+");
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
-    public String getFirstName(){
+
+    public String getFirstName() {
         return firstName;
     }
 
@@ -115,5 +118,5 @@ public class Student {
     /*note I do not have set methods for names an id's because im not accounting for people
     who change their name and you cannot change your id after its created.
      */
+    //note i know this method will be moved but leaving it here for now
 }
-
