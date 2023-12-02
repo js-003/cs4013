@@ -1,11 +1,13 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.TreeMap;
 
-public class LecturerDatabase extends Database{
-    LecturerDatabase(){
+public class StudentDatabase extends Database {
+    StudentDatabase(){
         super.general_db = new TreeMap<>();
-        super.file_name = "LecturerDB.csv";
+        super.file_name = "StudentDB.csv";
         super.loadFromFile();
     }
     @Override
@@ -20,7 +22,7 @@ public class LecturerDatabase extends Database{
         super.general_db.remove(keyValue);
         super.saveToFile();
     }
-
+    
     @Override
     public ArrayList<String> getUniqueIdentifier(){
         return (ArrayList<String>) super.general_db.keySet();
