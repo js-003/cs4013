@@ -1,4 +1,8 @@
-{
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.TreeMap;
+
+public class LecturerDatabase extends Database{
     LecturerDatabase(){
         super.general_db = new TreeMap<>();
         super.file_name = "LecturerDB.csv";
