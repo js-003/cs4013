@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
@@ -41,4 +42,6 @@ public abstract class Database {
     abstract void addToDb(Object o);
 
     abstract void removeFromDb(String keyValue);
+
+    abstract ArrayList<String> getUniqueIdentifier();
 }
