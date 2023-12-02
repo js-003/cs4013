@@ -10,7 +10,8 @@ public class Lecturer {
     private String department;
 
     private final ArrayList<Integer> listId = new ArrayList<>();
-    private int id;
+
+    private String username;
 
     public Lecturer(String firstName,String surname, String moduleCode, String phoneNumber, String email, String department){
         this.firstName = firstName;
@@ -19,13 +20,13 @@ public class Lecturer {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.department = department;
-        int newID = (int) ((Math.random())*99999);
-        while(listId.contains(newID)){
-            newID = (int) ((Math.random())*99999);
-        }
-        this.id = newID;
-
+        generateUsername();
     }
+
+    public void generateUsername(){
+        this.username = this.firstName.toLowerCase()+"."+this.surname.toLowerCase();
+    }
+
 
     public String getModuleCode(){
         return this.moduleCode;
@@ -39,7 +40,7 @@ public class Lecturer {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getSurname() {
         return surname;
     }
     public void setSurname(String newSurname) {
@@ -58,12 +59,15 @@ public class Lecturer {
         return email;
     }
 
+    public String getUsername(){
+        return this.username;
+    }
     public void setEmail(String newEmail) {
         this.email = newEmail;
     }
 
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s,%s",this.id,this.firstName,this.surname,this.moduleCode,this.phoneNumber,this.email);
+        return String.format("%s,%s,%s,%s,%s,%s",getUsername(),getFirstName(),getSurname(),getModuleCode(),getPhoneNumber(),getEmail());
     }
 
     public String getDepartment() {
@@ -74,5 +78,7 @@ public class Lecturer {
         this.department = department;
     }
 
-
+    public static void main(String[] args) {
+        Lecturer n = new Lecturer("Mi","Eng","CS4013","+353876523466","m.eng@ul.ie","Science");
+    }
 }
