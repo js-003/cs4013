@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.TreeMap;
-
-public class LecturerDatabase extends Database{
+{
     LecturerDatabase(){
         super.general_db = new TreeMap<>();
         super.file_name = "LecturerDB.csv";
@@ -20,4 +17,8 @@ public class LecturerDatabase extends Database{
         super.saveToFile();
     }
 
+    @Override
+    public ArrayList<String> getUniqueIdentifier(){
+        return (ArrayList<String>) super.general_db.keySet();
+    }
 }
