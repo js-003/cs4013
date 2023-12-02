@@ -1,10 +1,10 @@
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
 
 public class CLI {
-
-    private Course course ;
+    private Course course;
     private Module module;
     private Gradebook gradebook = new Gradebook();;
     private Grades grade ;
@@ -17,6 +17,7 @@ public class CLI {
     private String admin_pass = "TestingStuff123?";
     Scanner in = new Scanner(System.in);
     AccountDatabase user_db = new AccountDatabase("Account.csv");
+    LecturerDatabase lecturerDb = new LecturerDatabase();
 
     public void run() {
         System.out.println("""
@@ -34,7 +35,7 @@ public class CLI {
         boolean running = true;
         System.out.println(user_db.toString());
         while (running) {
-            System.out.println("U)ser-Acess F)ormatting A)dmin L)ecturer");
+            System.out.println("U)ser-Acess F)ormatting A)dmin L)ecturer Q)uit");
             String command = in.nextLine();
             switch (command) {
                 case "U" -> {
@@ -62,6 +63,9 @@ public class CLI {
                 }
                 case "A" -> {
                     adminAccess();
+                }
+                case "Q" -> {
+                    running = false;
                 }
 
             }
@@ -112,7 +116,6 @@ public class CLI {
                 }
             }
         }
-
     }
 
     public void studentAccess(){
@@ -129,6 +132,7 @@ public class CLI {
                     password = in.nextLine();
                     if (user_db.login(user, password)) {
                         System.out.println("login was successful");
+                        studentMenu();
                     } else {
                         System.out.println("login was unsuccessful");
                     }
@@ -142,6 +146,25 @@ public class CLI {
 
 
     //JAKUB
+    private void studentMenu(){
+        boolean running = true;
+        String userCommandds;
+        while(running){
+            System.out.print("C)heck-Modules S)tudent-Details T)ranscript Q)uit" );
+            userCommandds = in.nextLine();
+            switch(userCommandds){
+                case "C" ->{
+
+                }
+                case  "S" -> {
+
+                }
+                case "T" -> {
+
+                }
+            }
+        }
+    }
     private void adminAccess(){
         System.out.println("ADMIN PASSWORD REQUIRED");
         String admin_pass_attempt = in.nextLine();
@@ -173,7 +196,7 @@ public class CLI {
             }
         }
     }
-    public void adminCreate(){
+    private void adminCreate(){
         boolean running = true;
         while(running) {
             System.out.println("C)ourse M)odule L)ecturer S)tudent Q)uit");
@@ -248,12 +271,13 @@ public class CLI {
                         if (!email.matches(".*@\\w+.\\w+")) {
                             System.out.println("Enter Lecturer Email");
                             email = in.nextLine();
-                        }else  checker = false;
+                        } else checker = false;
+                    }
                         System.out.println("Enter Lecturer Department");
                         String department = in.nextLine();
                         lecturer = new Lecturer(firstName, surname, moduleCode, phoneNumber, email, department);
+                        lecturerDb.addToDb(lecturer);
                     }
-                }
                 case "S" -> {
                     System.out.println("Enter Student Name");
                     String firstName = in.nextLine();
@@ -307,7 +331,7 @@ public class CLI {
         boolean running = true;
         String userCommands;
         while (running) {
-            System.out.print("L)ogin Q)uit");
+            System.out.println("L)ogin Q)uit");
             userCommands = in.nextLine();
             switch (userCommands) {
                 case "L" -> {
