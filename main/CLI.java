@@ -7,7 +7,6 @@ public class CLI {
     private Course course;
     private Module module;
     private Gradebook gradebook = new Gradebook();;
-    private Grades grade ;
 
     private Lecturer lecturer;
     private Student student;
@@ -417,8 +416,7 @@ public class CLI {
                     String result = in.nextLine();
                     System.out.println("Enter Name Of The Test");
                     String testName = in.nextLine();
-                    grade = new Grades(testName,Double.parseDouble(result));
-                    gradebook.addTestResult(sId,grade);
+                    //gradebook.addTestResult(sId,grade);
                 }
                 case "Q" -> {
                     running = false;
