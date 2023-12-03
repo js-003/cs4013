@@ -35,7 +35,7 @@ public class Module {
     }
 
     public String StudentList(){
-        return this.module.toString();
+        return Arrays.toString(module.toArray()).replace("[","").replace("]","");
     }
 
     public int getSemester() {
@@ -47,7 +47,7 @@ public class Module {
     }
 
     public String toString(){
-        return Arrays.toString(module.toArray()).replace("[","").replace("]","");
+        return String.format("%s,%s,%s",getModuleCode(),getModuleName(),getCredits()) ;
     }
 
 }
