@@ -17,13 +17,14 @@ public class Student {
 
 
     //student constructor
-    public Student(String firstName, String lastName, String address, String email, String phone, String BankDetails) {
+    public Student(String firstName, String lastName, String address, String email, String phone, String bankDetails) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.phone = phone;
         this.bankDetails = bankDetails;
+        generateStudentId();
 
     }
 
@@ -45,32 +46,28 @@ public class Student {
             } else i = 0;
 
         }
-        idList.add(id.toString());
-        this.id = id.toString();
+        idList.add(id);
+        this.id = id;
 
     }
 
     // Method to change email
     public void changeEmail(String newEmail) {
         // checks to see if newEmail is a valid address,if true changes it
-        if (isValidEmail(newEmail)) {
+
             this.email = newEmail;
             System.out.println("Email changed successfully.");
-        } else {
-            System.out.println("Invalid email format. Email not changed.");
         }
-    }
+
 
     //method to change Phone number
     public void changePhone(String newPhone) {
         // checks to see if the newPhone is a valid phone number,if true changes it
-        if (isValidPhone(newPhone)) {
+
             this.phone = newPhone;
             System.out.println("Phone number changed successfully.");
-        } else {
-            System.out.println("Invalid phone number format. Phone number not changed.");
         }
-    }
+
 
     // Method to change bank details
     public void changeBankDetails(String newBankDetails) {
@@ -79,18 +76,7 @@ public class Student {
         System.out.println("Bank details changed successfully.");
     }
 
-    // Validation method for email
-    private boolean isValidEmail(String email) {
-        // if the email conatins an '@' and a '.'it's considered valid
-        return email.contains("@") && email.contains(".");
-    }
 
-    // Validation method for phone number format
-    private boolean isValidPhone(String phone) {
-        // Add your phone number validation logic here
-        // For simplicity, a basic check for numeric characters is done
-        return phone.matches("\\d+");
-    }
 
     public String getId() {
         return id;
