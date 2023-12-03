@@ -1,115 +1,117 @@
 import java.util.HashMap;
+import java.util.Map;
 
-/**
- * This class represents a gradebook, which stores grades for exams for different students.
- */
-public class Gradebook {
-    // A map to store grades for different exams
-    private final HashMap<String, Grades> grades;
+public class Gradebook extends GradingDatabase {
+    private String[] Grades;
+    private double[] PercentageCutOff;
+    private double[] Score;
+    private HashMap<String, Double> resultsList;
 
-    /**
-     * Initiate an empty gradebook.
-     */
-    public Gradebook() {
-        this.grades = new HashMap<>();
+    private String moduleCode;
+
+    private String date;
+
+    private GradingDatabase gdb;
+
+    public Gradebook(String moduleCode, String date, String[] grades, double[] percentageCutOff, double[] score) {
+        this.moduleCode = moduleCode;
+        this.Grades = grades;
+        this.PercentageCutOff = percentageCutOff;
+        this.Score = score;
+        this.date = date;
+        resultsList = new HashMap<>();
+        gdb = new GradingDatabase();
+        gdb.loadFromFile();
+    }
+
+    public Gradebook(String moduleCode, String date) {
+        this.Grades = new String[] {"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "F"};
+        this.PercentageCutOff = new double[] {80, 72, 64, 60, 56, 52, 48, 40, 35, 30, 0};
+        this.Score = new double[] {4.00, 3.60, 3.20, 3.00, 2.80, 2.60, 2.40, 2.00, 1.60, 1.20, 0.00};
+        this.moduleCode = moduleCode;
+        this.date = date;
+        resultsList = new HashMap<>();
+        gdb = new GradingDatabase();
+        gdb.loadFromFile();
+    }
+
+    public void storeExamination(){
+        for(Map.Entry<String,Double> set: resultsList.entrySet()){
+            gdb.storeResult(set.getKey(), date, moduleCode, getGrade(set.getValue()), getScore(set.getValue())  ) ;
+        }
+        gdb.saveToFile();
+    }
+
+    private String getGrade(double result) {
+        for (int i = 0; i < Grades.length; i++) {
+            if (result >= PercentageCutOff[i]) {
+                return Grades[i];
+            }
+        }
+        return "NG";
+    }
+
+    public void addStudentResult(String id, double result){
+        resultsList.put(id, result);
+    }
+
+    private double getScore(double result) {
+        for (int i = 0; i < Score.length; i++) {
+            if (result >= PercentageCutOff[i]) {
+                return Score[i];
+            }
+        }
+        return 0.00;
     }
 
     /**
-     * Add grades for an specific exam to the gradebook.
+     * Set the result for a specific student identified by their ID.
      *
-     * @param test    The name or identifier of an exam.
-     * @param results The Grades object containing results for an exam
+     * @param ID     The student's ID.
+     * @param result The result obtained by the student in an exam.
      */
-    public void addGrade(String test, Grades results) {
-        this.grades.put(test, results);
+    public void setResult(String ID, double result) {
+        this.resultsList.put(ID, result);
     }
 
     /**
-     * Calculate and return the average score for an specific exam.
-     *
-     * @param test The identifier of an exam
-     * @return The average score for the specified exam
+     * Delete all stored results.
      */
-    public Double getAverage(String test) {
-        Double total = 0.0;
-        Grades results = grades.get(test);
-        for(Double grade : results.getResults().values()) {
-            total += grade;
-        }
-        return (double) (total/results.getResults().values().size());
+    public void delete() {
+        this.resultsList = new HashMap<>();
     }
 
     /**
-     * Calculate and return the class average across all exams
+     * Delete a student's data for an exam.
      *
-     * @return The class average across all exams
+     * @param ID A student's ID
      */
-    public Double getClassAverage() {
-        Double total = 0.0;
-        for(String test : this.grades.keySet()) {
-            total += this.getAverage(test);
-        }
-        return (total/this.grades.values().size());
+    public void delete(String ID) {
+        this.resultsList.remove(ID);
     }
 
     /**
-     * Calculate and return the average score for an specific student across all exams
+     * Get a student's data for an exam.
      *
-     * @param ID The student's ID
-     * @return The average score for the specified student across all exams
+     * @param ID A student's ID
      */
-    public Double getStudentAverage(String ID) {
-        Double total = 0.0;
-        for(String test : this.grades.keySet()) {
-            total += this.grades.get(test).getResult(ID);
-        }
-        return (double) (total/this.grades.values().size());
+
+    public Double getResult(String ID) {
+        return this.resultsList.get(ID);
     }
 
     /**
-     * Determine and return the grade type for an specific student based on their average
+     * Get a map with all stored results, where each entry represents a student and their result
      *
-     * @param ID The student's ID.
-     * @return The GradeType representing the determined grade for the student.
+     * @return A map containing all stored results.
      */
-    public GradeType getStudentGrade(String ID) {
-        Double average = getStudentAverage(ID);
-        if (average >= 80) {
-            return GradeType.A1;
-        }
-        if (average >= 72) {
-            return GradeType.A2;
-        }
-        if (average >= 64) {
-            return GradeType.B1;
-        }
-        if (average >= 60) {
-            return GradeType.B2;
-        }
-        if (average >= 56) {
-            return GradeType.B3;
-        }
-        if (average >= 52) {
-            return GradeType.C1;
-        }
-        if (average >= 48) {
-            return GradeType.C2;
-        }
-        if (average >= 40) {
-            return GradeType.C3;
-        }
-        if (average >= 35) {
-            return GradeType.D1;
-        }
-        if (average >= 30) {
-            return GradeType.D2;
-        }
-        if (average >= 0) {
-            return GradeType.F;
-        }
-        return GradeType.NG;
+
+    public HashMap<String, Double> getResults(Double value) {
+        return resultsList;
     }
 
-    public void addTestResult(String sId, Grades grade) {
+    public Double setIGrade() {
+        return 0.0;
     }
+
 }
