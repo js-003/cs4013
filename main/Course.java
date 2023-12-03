@@ -5,12 +5,14 @@ public class Course {
     private String degree;
     private String courseName;
     private final String courseCode;
+    private String Level;
 
     private final int yearOfStudy;
 
     private ArrayList<Student> studentList;
 
     private ArrayList<String> moduleList;
+
     private ArrayList<Semester> semester;
 
     public Course(String courseCode, String courseName, int yearOfStudy){
