@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -17,7 +17,11 @@ public class CLI {
     private String admin_pass = "TestingStuff123?";
     Scanner in = new Scanner(System.in);
     AccountDatabase user_db = new AccountDatabase("Account.csv");
-    LecturerDatabase lecturerDb = new LecturerDatabase();
+    StoreToDatabase lecturerDb = new StoreToDatabase("Lecturer.csv");
+    StoreToDatabase studentDb = new StoreToDatabase("Student.csv");
+
+    StoreToDatabase courseDB = new StoreToDatabase("Course.csv");
+    StoreToDatabase moduleDb = new StoreToDatabase("Module.csv");
 
     public void run() {
         System.out.println("""
@@ -35,10 +39,10 @@ public class CLI {
         boolean running = true;
         System.out.println(user_db.toString());
         while (running) {
-            System.out.println("U)ser-Acess F)ormatting A)dmin L)ecturer Q)uit");
+            System.out.println("A)dmin F)ormat L)ecturer S)tudent Q)uit");
             String command = in.nextLine();
-            switch (command) {
-                case "U" -> {
+            switch (command.toUpperCase()) {
+                case "S" -> {
                     studentAccess();
                 }
                 case "F" -> {
@@ -83,7 +87,7 @@ public class CLI {
             while(running){
                 System.out.println("A)dd-User R)emove-User Q)uit");
                 adminCommands = in.nextLine();
-                switch(adminCommands){
+                switch(adminCommands.toUpperCase()){
                     case "A" -> {
                         System.out.println("Create the new user ID or Username");
                         user = in.nextLine();
@@ -124,17 +128,21 @@ public class CLI {
         while(running){
             System.out.print("L)ogin Q)uit ~more functionality to be added~" );
             userCommandds = in.nextLine();
-            switch(userCommandds){
+            switch(userCommandds.toUpperCase()){
                 case "L" -> {
-                    System.out.println("Enter your user id.");
-                    user = in.nextLine();
-                    System.out.println("Enter the user's password.");
-                    password = in.nextLine();
-                    if (user_db.login(user, password)) {
-                        System.out.println("login was successful");
-                        studentMenu();
-                    } else {
-                        System.out.println("login was unsuccessful");
+                    boolean checker = true;
+                    while (checker) {
+                        System.out.println("Enter your user id.");
+                        user = in.nextLine();
+                        System.out.println("Enter the user's password.");
+                        password = in.nextLine();
+                        if (user_db.login(user, password)) {
+                            System.out.println("login was successful");
+                            checker = false;
+                            studentMenu();
+                        } else {
+                            System.out.println("login was unsuccessful");
+                        }
                     }
                 }
                 case "Q" -> {
@@ -148,19 +156,21 @@ public class CLI {
     //JAKUB
     private void studentMenu(){
         boolean running = true;
-        String userCommandds;
+        String userCommands;
         while(running){
             System.out.print("C)heck-Modules S)tudent-Details T)ranscript Q)uit" );
-            userCommandds = in.nextLine();
-            switch(userCommandds){
+            userCommands = in.nextLine();
+            switch(userCommands.toUpperCase()){
                 case "C" ->{
-
+                //show modukes
                 }
                 case  "S" -> {
-
+                //show student Details
                 }
                 case "T" -> {
-
+                // Show transcript
+                }case "Q" ->{
+                    running = false;
                 }
             }
         }
@@ -170,24 +180,20 @@ public class CLI {
         String admin_pass_attempt = in.nextLine();
         if(Objects.equals(admin_pass_attempt, admin_pass)) {
             System.out.println("ACCESS GRANTED");
-            String adminCommands;
+            String input;
             boolean running = true;
             while(running){
-                System.out.println("C)reate R)emove-User Q)uit");
-                adminCommands = in.nextLine();
-                switch(adminCommands){
+                System.out.println("A)dd C)reate R)emove Q)uit");
+                input = in.nextLine();
+                switch(input.toUpperCase()){
+                    case "A" ->{
+                        adminAdd();
+                    }
                     case "C" -> {
                         adminCreate();
                     }
                     case "R" -> {
-                        System.out.println("Enter user ID for removal");
-                        user = in.nextLine();
-                        if(!user_db.isValidId(user) && !user_db.isValidUsername(user)){
-                            System.out.println("Invalid ID or Username try again!");
-                            break;
-                        }
-                        user_db.removeUser(user);
-                        System.out.println("User removed!");
+                        adminRemove();
                     }
                     case "Q" -> {
                         running = false;
@@ -196,12 +202,90 @@ public class CLI {
             }
         }
     }
+
+    private void adminRemove(){
+        boolean running = true;
+        while(running){
+            System.out.println("Select What You Want To Remove:\nC)ourse M)odule S)tudent");
+            String input = in.nextLine();
+            switch (input){
+                case "C" ->{
+                    System.out.println("Enter Course Name Or Course Code");
+                    String courseFinder = in.nextLine();
+
+                }case "M" ->{
+                    System.out.println("Enter Module Name Or Module Code");
+                    String moduleFinder = in.nextLine();
+
+                }case "S" ->{
+                    System.out.println("Enter Student ID");
+                    String studentFinder = in.nextLine();
+
+                }
+            }
+        }
+    }
+
+    private void addStudent(){
+        boolean running = true;
+        while (running){
+            System.out.println("Add Student To:\nC)ourse M)odule Q)uit");
+            String input = in.nextLine();
+            switch (input.toUpperCase()) {
+                case "C" -> {
+                    System.out.println("Enter Student ID");
+                    String sId = in.nextLine();
+                    System.out.println("Enter Course Code Or Full Name Of The Course");
+                    String course = in.nextLine();
+                    try {
+                        courseDB.addStudentToModule(sId, course);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "M" -> {
+                    System.out.println("Enter Student ID");
+                    String sId = in.nextLine();
+                    System.out.println("Enter Module Code Or Full Name Of The Module");
+                    String course = in.nextLine();
+                    try {
+                        moduleDb.addStudentToModule(sId, course);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                case "Q" ->{
+                    running = false;
+                }
+            }
+        }
+    }
+    private void adminAdd(){
+        boolean running = true;
+        while(running){
+            System.out.println("Select What You Want To Add: (NOTE: Whatever You Want To Add Needs To Be Created First!)\n" +
+                    "M)odule L)ecturer S)tudent Q)uit");
+            String input = in.nextLine();
+            switch (input.toUpperCase()){
+                case "M" ->{
+                   //mod
+                }case "L" ->{
+                   //lec
+                }case "S" ->{
+                    addStudent();
+                }case "Q" ->{
+                    running = false;
+                }
+            }
+
+        }
+    }
     private void adminCreate(){
         boolean running = true;
         while(running) {
             System.out.println("C)ourse M)odule L)ecturer S)tudent Q)uit");
             String input = in.nextLine();
-            switch (input) {
+            switch (input.toUpperCase()) {
                 case "C" -> {
                     System.out.println("Enter Course Code");
                     String courseCode = in.nextLine();
@@ -210,7 +294,7 @@ public class CLI {
                     System.out.println("Enter Course Year Of Study");
                     String courseYear = in.nextLine();
                     course = new Course(courseCode,courseName,Integer.parseInt(courseYear)) ;
-
+                    courseDB.addToDb(courseCode);
                 }
                 case "M" -> {
                     System.out.println("Enter Module Code");
@@ -227,6 +311,7 @@ public class CLI {
                     System.out.println("Enter Module Credit");
                     String moduleCredits = in.nextLine();
                     module = new Module(moduleName,moduleCode,Integer.parseInt(moduleCredits));
+                    moduleDb.addToDb(module);
                 }
                 case "L" -> {
                     System.out.println("Enter Lecturer Name");
@@ -234,7 +319,7 @@ public class CLI {
                     boolean checker = true;
                     while (checker) {
                         if (!firstName.matches("[a-z A-Z]\\w*")) {
-                            System.out.println("Check Lecturer Name - Format[Name Must Contain: First Letter Is Capital, If Needed DO NOT USE SPACES use -");
+                            System.out.println("Enter Lecturers Name (DO NOT USE SPACES, USE -");
                             firstName = in.nextLine();
                         }else  checker = false;
                     }
@@ -243,7 +328,7 @@ public class CLI {
                     String surname = in.nextLine();
                     while (checker) {
                         if (!surname.matches("[a-z A-Z]\\w*")) {
-                            System.out.println("Enter Lecturer Surname");
+                            System.out.println("Enter Lecturers Surname (DO NOT USE SPACES, USE -\"");
                             surname = in.nextLine();
                         }else  checker = false;
                     }
@@ -252,7 +337,7 @@ public class CLI {
                     String moduleCode = in.nextLine();
                     while (checker) {
                         if (!Character.isLetter(moduleCode.charAt(0)) && Character.isLetter(moduleCode.charAt(1)) && moduleCode.matches("\\w{2}\\d{4}")) {
-                            System.out.println("Enter Lecturer Surname");
+                            System.out.println("Enter Lecturer Module Code (MUST CONTAIN, 2 LETTERS IN CAPITALS, 4 DIGITS");
                             moduleCode = in.nextLine();
                         }else  checker = false;
                     }
@@ -260,8 +345,8 @@ public class CLI {
                     System.out.println("Enter Lecturer Phone Number");
                     String phoneNumber = in.nextLine();
                     while (checker) {
-                        if (!phoneNumber.matches("[+]\\w{2,3}\\w{9,12}")) {
-                            System.out.println("Enter Lecturer Phone Number");
+                        if (!phoneNumber.matches("[+]\\w{2,3}\\w{4,12}")) {
+                            System.out.println("Enter Lecturer Phone Number (MUST CONTAIN, +, COUNTRY CODE [2-3 DIGITS] AND UP TO 12 DIGITS AFTER COUNTRY CODE");
                             phoneNumber = in.nextLine();
                         }else  checker = false;
                     }
@@ -269,7 +354,7 @@ public class CLI {
                     String email = in.nextLine();
                     while (checker) {
                         if (!email.matches(".*@\\w+.\\w+")) {
-                            System.out.println("Enter Lecturer Email");
+                            System.out.println("Enter Lecturer Email FORMAT - *******@***.***");
                             email = in.nextLine();
                         } else checker = false;
                     }
@@ -279,19 +364,34 @@ public class CLI {
                         lecturerDb.addToDb(lecturer);
                     }
                 case "S" -> {
+                    boolean checker = true;
                     System.out.println("Enter Student Name");
                     String firstName = in.nextLine();
                     System.out.println("Enter Student Surname");
                     String surname = in.nextLine();
-                    System.out.println("Enter Student Course");
+                    System.out.println("Enter Student Address");
                     String moduleCode = in.nextLine();
-                    System.out.println("Enter Lecturer Phone Number");
+                    System.out.println("Enter Student Phone Number");
                     String phoneNumber = in.nextLine();
-                    System.out.println("Enter Lecturer Email");
+                    while (checker) {
+                        if (!phoneNumber.matches("[+]\\w{2,3}\\w{9,12}")) {
+                            System.out.println("Enter Lecturer Phone Number (MUST CONTAIN, + COUNTRY CODE 9-12 DIGITS");
+                            phoneNumber = in.nextLine();
+                        } else checker = false;
+                    }
+                    System.out.println("Enter Student Email");
                     String email = in.nextLine();
-                    System.out.println("Enter Lecturer Department");
-                    String department = in.nextLine();
-                    lecturer = new Lecturer(firstName,surname,moduleCode,phoneNumber,email,department);
+                    checker = true;
+                    while(checker){
+                        if(!email.contains("@") && email.contains(".")){
+                            System.out.println("Enter Student Email - Format (****@*****.***) ");
+                            email = in.nextLine();
+                        }checker = false;
+                    }
+                    System.out.println("Enter Student Bank Details");
+                    String details = in.nextLine();
+                    student = new Student(firstName,surname,moduleCode,phoneNumber,email,details);
+                    studentDb.addToDb(student);
                 }
                 case "Q" -> {
                     running = false;
@@ -302,13 +402,13 @@ public class CLI {
 
     private void lecturerLoggedOn(){
         boolean running = true;
-        String userCommands;
+        String input;
         while(running){
             System.out.print("S)how-Student-List G)rade-Student Q)uit");
-            userCommands = in.nextLine();
-            switch (userCommands) {
+            input = in.nextLine();
+            switch (input.toUpperCase()) {
                 case "S" -> {
-                    System.out.println(module);
+
                 }
                 case "G" -> {
                     System.out.println("Enter Student ID");
@@ -329,13 +429,13 @@ public class CLI {
 
     private void lecturerAccess() {
         boolean running = true;
-        String userCommands;
+        String input;
         while (running) {
             System.out.println("L)ogin Q)uit");
-            userCommands = in.nextLine();
-            switch (userCommands) {
+            input = in.nextLine();
+            switch (input.toUpperCase()) {
                 case "L" -> {
-                    System.out.println("Enter your User Name: (Firstname.surname - eg. michael.english)");
+                    System.out.println("Enter your User Name: (firstname.surname - eg. michael.english)");
                     this.user = in.nextLine();
                     System.out.println("Enter your Password: ");
                     this.password = in.nextLine();
