@@ -25,9 +25,9 @@ public class Gradebook extends GradingDatabase {
     }
 
     public Gradebook(String moduleCode, String date) {
-        this.Grades = new String[] {"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "F"};
-        this.PercentageCutOff = new double[] {80, 72, 64, 60, 56, 52, 48, 40, 35, 30, 0};
-        this.Score = new double[] {4.00, 3.60, 3.20, 3.00, 2.80, 2.60, 2.40, 2.00, 1.60, 1.20, 0.00};
+        this.Grades = new String[] {"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "F", "NG", "I"};
+        this.PercentageCutOff = new double[] {80, 72, 64, 60, 56, 52, 48, 40, 35, 30, 0, -1, -2};
+        this.Score = new double[] {4.00, 3.60, 3.20, 3.00, 2.80, 2.60, 2.40, 2.00, 1.60, 1.20, 0.00, 0.00};
         this.moduleCode = moduleCode;
         this.date = date;
         resultsList = new HashMap<>();
@@ -35,14 +35,14 @@ public class Gradebook extends GradingDatabase {
         gdb.loadFromFile();
     }
 
-    public void storeExamination(){
-        for(Map.Entry<String,Double> set: resultsList.entrySet()){
-            gdb.storeResult(set.getKey(), date, moduleCode, getGrade(set.getValue()), getScore(set.getValue())  ) ;
+    public void storeExamination() {
+        for (Map.Entry<String, Double> set : resultsList.entrySet()) {
+            gdb.storeResult(set.getKey(), date, moduleCode, getGrade(set.getValue()), getScore(set.getValue()));
         }
         gdb.saveToFile();
     }
 
-    private String getGrade(double result) {
+    public String getGrade(double result) {
         for (int i = 0; i < Grades.length; i++) {
             if (result >= PercentageCutOff[i]) {
                 return Grades[i];
@@ -51,7 +51,7 @@ public class Gradebook extends GradingDatabase {
         return "NG";
     }
 
-    public void addStudentResult(String id, double result){
+    public void addStudentResult(String id, double result) {
         resultsList.put(id, result);
     }
 
@@ -110,8 +110,10 @@ public class Gradebook extends GradingDatabase {
         return resultsList;
     }
 
-    public Double setIGrade() {
-        return 0.0;
+    public void setIGrade(String ID) {
+        this.resultsList.put(ID, -2.0);
     }
-
+    public Gradebook(String testName){
+        setIGrade(testName);
+    }
 }
