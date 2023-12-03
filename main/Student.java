@@ -112,11 +112,15 @@ public class Student {
         return email;
     }
 
+    public String getPhone(){return phone;
+    }
+
     public String getBankDetails() {
         return bankDetails;
     }
-    /*note I do not have set methods for names an id's because im not accounting for people
-    who change their name and you cannot change your id after its created.
-     */
-    //note i know this method will be moved but leaving it here for now
+
+    @Override
+    public String toString(){
+        return String.format("%s,%s,%s,%s,%s,%s,%s",getFirstName(),getLastName(),getId(),getAddress(),getEmail(),getPhone(),getBankDetails());
+    }
 }
