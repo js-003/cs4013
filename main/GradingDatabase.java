@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * @author Irene & Eryk
  * The GradingDatabase class represents a database for storing student grading information.
  */
 public class GradingDatabase {

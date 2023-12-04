@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @author Irene
  * The Gradebook class represents a grading system for an specific module and date.
  * It extends the GradingDatabase class to store student results.
  */
