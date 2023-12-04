@@ -7,7 +7,6 @@ import java.util.Map;
  */
 public class Gradebook extends GradingDatabase {
 
-    // Fields
     private String[] Grades;
     private double[] PercentageCutOff;
     private double[] Score;
@@ -43,9 +42,9 @@ public class Gradebook extends GradingDatabase {
      * @param date       The date when results are out.
      */
     public Gradebook(String moduleCode, String date) {
-        this.Grades = new String[] {"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "F", "NG", "I"};
-        this.PercentageCutOff = new double[] {80, 72, 64, 60, 56, 52, 48, 40, 35, 30, 0, -1, -2};
-        this.Score = new double[] {4.00, 3.60, 3.20, 3.00, 2.80, 2.60, 2.40, 2.00, 1.60, 1.20, 0.00, 0.00};
+        this.Grades = new String[]{"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "F", "NG", "I"};
+        this.PercentageCutOff = new double[]{80, 72, 64, 60, 56, 52, 48, 40, 35, 30, 0, -1, -2};
+        this.Score = new double[]{4.00, 3.60, 3.20, 3.00, 2.80, 2.60, 2.40, 2.00, 1.60, 1.20, 0.00, 0.00};
         this.moduleCode = moduleCode;
         this.date = date;
         resultsList = new HashMap<>();
