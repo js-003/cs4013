@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * @author Jakub
+ */
 public class Course {
     private String degree;
     private String courseName;

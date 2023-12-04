@@ -1,7 +1,9 @@
 
 
 import java.util.*;
-
+/**
+ * @author Jakub
+ */
 public class Module {
     private String moduleName;
     private String moduleCode;

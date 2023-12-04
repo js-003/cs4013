@@ -1,6 +1,9 @@
 
 import java.util.ArrayList;
 
+/**
+ * @author Sinead
+ */
 public class Semester {
     private int semesterNumber;
     private ArrayList<Module> SemesterModules; //creates an arraylist of type module

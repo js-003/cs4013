@@ -10,7 +10,12 @@ public class LecturerDatabase extends Database<Lecturer> {
         super.loadFromFile();
     }
 
-
+    /**
+     * Returns details from the database
+     *
+     * @param id Lecturer id
+     * @return A String array made up of the details
+     */
     public String[] getDetails(String id){
         return super.general_db.get(id);
     }
