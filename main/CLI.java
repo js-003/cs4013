@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -8,21 +9,21 @@ import java.util.Scanner;
 public class CLI {
     private Course course;
     private Module module;
-    private Gradebook gradebook = new Gradebook();;
 
-    private Lecturer lecturer;
+    //private Lecturer lecturer;
     private Student student;
     private String user;
     private String password;
     //Admin password for restricted access
     private String admin_pass = "TestingStuff123?";
     Scanner in = new Scanner(System.in);
-    AccountDatabase user_db = new AccountDatabase("Account.csv");
+    AccountDatabase user_db = new AccountDatabase();
     LecturerDatabase lecturerDb = new LecturerDatabase();
     StudentDatabase studentDb = new StudentDatabase();
 
-    StoreToDatabase courseDB = new StoreToDatabase("Course.csv"); // needs to be changed to course database
-    StoreToDatabase moduleDb = new StoreToDatabase("Module.csv"); // needs to be changed to module database
+    ModuleDatabase moduleDb = new ModuleDatabase();
+
+    CourseDatabase courseDb = new CourseDatabase();
 
     public void run() {
         System.out.println("""
@@ -76,6 +77,7 @@ public class CLI {
             }
 
         }
+
     }
 
     private void adminAccess1(){
@@ -140,7 +142,7 @@ public class CLI {
                         if (user_db.login(user, password)) {
                             System.out.println("login was successful");
                             checker = false;
-                            studentMenu();
+                            studentMenu(user);
                         } else {
                             System.out.println("login was unsuccessful");
                         }
@@ -159,23 +161,33 @@ public class CLI {
     /**
      * Student menu which displays all options a student can use
      */
-    private void studentMenu(){
+
+    private void studentMenu(String id){
         boolean running = true;
         String userCommands;
         while(running){
-            System.out.print("C)heck-Modules S)tudent-Details T)ranscript Q)uit" );
+            System.out.print("S)tudent-Details T)ranscript Q)uit" );
             userCommands = in.nextLine();
             switch(userCommands.toUpperCase()){
-                case "C" ->{
-                //show modukes
-                }
                 case  "S" -> {
-                //show student Details
+                    try{
+                        StudentDatabase studentDB = new StudentDatabase();
+                        System.out.println(Arrays.toString(studentDB.getDetails(id)));
+                    } catch(RuntimeException e){
+                        e.printStackTrace();
+                    }
                 }
                 case "T" -> {
-                // Show transcript
+                    try{
+                        Transcript transcript = new Transcript(user);
+                        System.out.println(transcript.getTranscript());
+                    } catch(RuntimeException e){
+                        e.printStackTrace();
+                }
+
                 }case "Q" ->{
                     running = false;
+
                 }
             }
         }
@@ -193,89 +205,21 @@ public class CLI {
             String input;
             boolean running = true;
             while(running){
-                System.out.println("A)dd C)reate R)emove Q)uit");
+                System.out.println("A)dd R)emove Q)uit");
                 input = in.nextLine();
                 switch(input.toUpperCase()){
                     case "A" ->{
                         adminAdd();
                     }
-                    case "C" -> {
-                        adminCreate();
-                    }
-                    case "R" -> {
-                        adminRemove();
-                    }
                     case "Q" -> {
                         running = false;
                     }
-                }
-            }
-        }
-    }
-
-    /**
-     * Remove menu for admins after it is selected from the admin menu
-     */
-    private void adminRemove(){
-        boolean running = true;
-        while(running){
-            System.out.println("Select What You Want To Remove:\nC)ourse M)odule S)tudent");
-            String input = in.nextLine();
-            switch (input){
-                case "C" ->{
-                    System.out.println("Enter Course Name Or Course Code");
-                    String courseFinder = in.nextLine();
-
-                }case "M" ->{
-                    System.out.println("Enter Module Name Or Module Code");
-                    String moduleFinder = in.nextLine();
-
-                }case "S" ->{
-                    System.out.println("Enter Student ID");
-                    String studentFinder = in.nextLine();
 
                 }
             }
         }
     }
 
-    /**
-     * Add Student to course by an admin
-     */
-    private void addStudent(){
-        boolean running = true;
-        while (running){
-            System.out.println("Add Student To:\nC)ourse M)odule Q)uit");
-            String input = in.nextLine();
-            switch (input.toUpperCase()) {
-                case "C" -> {
-                    System.out.println("Enter Student ID");
-                    String sId = in.nextLine();
-                    System.out.println("Enter Course Code Or Full Name Of The Course");
-                    String course = in.nextLine();
-                    try {
-                        courseDB.addStudentToModule(sId, course);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                case "M" -> {
-                    System.out.println("Enter Student ID");
-                    String sId = in.nextLine();
-                    System.out.println("Enter Module Code Or Full Name Of The Module");
-                    String course = in.nextLine();
-                    try {
-                        moduleDb.addStudentToModule(sId, course);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                case "Q" ->{
-                    running = false;
-                }
-            }
-        }
-    }
 
     /**
      * Admin add menu after selecting add on admin home page
@@ -284,15 +228,135 @@ public class CLI {
         boolean running = true;
         while(running){
             System.out.println("Select What You Want To Add: (NOTE: Whatever You Want To Add Needs To Be Created First!)\n" +
-                    "M)odule L)ecturer S)tudent Q)uit");
+                    "M)odule L)ecturer S)tudent C)ourse Q)uit");
             String input = in.nextLine();
             switch (input.toUpperCase()){
                 case "M" ->{
-                   //mod
+                    try{
+                        System.out.println("Enter Module Code:");
+                        String moduleCode = in.nextLine();
+                        System.out.println("Enter Module Name:");
+                        String moduleName = in.nextLine();
+                        System.out.println("Enter Module Name:");
+                        int credit = Integer.parseInt(in.nextLine());
+                        Module module = new Module(moduleCode, moduleName, credit );
+                        ModuleDatabase moduleDB = new ModuleDatabase();
+                        moduleDB.addToDb(module);
+                    } catch (RuntimeException e){
+                        System.out.println("Processing failed please try again!");
+                        e.printStackTrace();
+                    }
                 }case "L" ->{
-                   //lec
-                }case "S" ->{
-                    addStudent();
+
+                    System.out.println("Enter Lecturer Name");
+                    String firstName = in.nextLine();
+                    boolean checker = true;
+                    while (checker) {
+                        if (!firstName.matches("[a-z A-Z]\\w*")) {
+                            System.out.println("Enter Lecturers Name (DO NOT USE SPACES, USE -");
+                            firstName = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
+                    System.out.println("Enter Lecturer Surname");
+                    String surname = in.nextLine();
+                    while (checker) {
+                        if (!surname.matches("[a-z A-Z]\\w*")) {
+                            System.out.println("Enter Lecturers Surname (DO NOT USE SPACES, USE -\"");
+                            surname = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
+                    System.out.println("Enter Lecturer Module Code");
+                    String moduleCode = in.nextLine();
+                    while (checker) {
+                        if (!Character.isLetter(moduleCode.charAt(0)) && Character.isLetter(moduleCode.charAt(1)) && moduleCode.matches("\\w{2}\\d{4}")) {
+                            System.out.println("Enter Lecturer Module Code (MUST CONTAIN, 2 LETTERS IN CAPITALS, 4 DIGITS");
+                            moduleCode = in.nextLine();
+                        }else  checker = false;
+                    }
+                    checker = true;
+                    System.out.println("Enter Lecturer Phone Number");
+                    String phoneNumber = in.nextLine();
+                    while (checker) {
+                        if (!phoneNumber.matches("[+]\\w{2,3}\\w{4,12}")) {
+                            System.out.println("Enter Lecturer Phone Number (MUST CONTAIN, +, COUNTRY CODE [2-3 DIGITS] AND UP TO 12 DIGITS AFTER COUNTRY CODE");
+                            phoneNumber = in.nextLine();
+                        }else  checker = false;
+                    }
+                    System.out.println("Enter Lecturer Email");
+                    String email = in.nextLine();
+                    while (checker) {
+                        if (!email.matches(".*@\\w+.\\w+")) {
+                            System.out.println("Enter Lecturer Email FORMAT - *******@***.***");
+                            email = in.nextLine();
+                        } else checker = false;
+                    }
+                    System.out.println("Enter Lecturer Department");
+                    String department = in.nextLine();
+                     Lecturer lecturer = new Lecturer(firstName, surname, moduleCode, phoneNumber, email, department);
+                    lecturerDb.addToDb(lecturer);
+                }case "S" -> {
+                    System.out.println("Create the new ID");
+                    user = in.nextLine();
+                    if (!user_db.isValidId(user) && !user_db.isValidUsername(user)) {
+                        System.out.println("Invalid ID try again!");
+                        break;
+                    }
+                    System.out.println("Create the new password for that user");
+                    password = in.nextLine();
+                    if (!user_db.isValidPassword(password)) {
+                        System.out.println("Invalid password try again!");
+                        break;
+                    }
+
+                    try {
+                        System.out.println("Enter ID");
+                        String id = in.nextLine();
+                        System.out.println("Enter first name");
+                        String firstName = in.nextLine();
+                        System.out.println("Enter surname");
+                        String surName = in.nextLine();
+                        System.out.println("Enter address");
+                        String address = in.nextLine();
+                        System.out.println("Enter phonenumber");
+                        String phoneNumber = in.nextLine();
+                        System.out.println("Enter email");
+                        String email = in.nextLine();
+                        System.out.println("Enter course code");
+                        String courseCode = in.nextLine();
+                        Student student = new Student(id, firstName, surName, address, phoneNumber, email, courseCode);
+                        StudentDatabase studentDB = new StudentDatabase();
+                        studentDB.addToDb(student);
+                        user_db.addUser(user, password);
+                        System.out.println("New user added!");
+                    } catch (RuntimeException e) {
+                        System.out.println("Processing failed please try again!");
+                        e.printStackTrace();
+                    }
+                }case "C" ->{
+                    System.out.println("Enter ModuleCode");
+                    String courseCode = in.nextLine();
+                    System.out.println("Enter Num of Semesters");
+                    int numOfSem = Integer.parseInt(in.nextLine());
+                    CourseModulesDatabase cmDB = new CourseModulesDatabase();
+                    cmDB.addCourse(courseCode, numOfSem);
+                    boolean adding = true;
+                    if(adding){
+                        System.out.println("Enter Semester");
+                        int semester = Integer.parseInt(in.nextLine());
+                         System.out.println("Enter module code");
+                         String moduleCode = in.nextLine();
+                         cmDB.createModule(courseCode, semester,moduleCode);
+                         System.out.println("Continue adding Y/N");
+                         String reply = in.nextLine();
+                         if(reply != "Y"){
+                             adding = false;
+                             cmDB.saveToFile();
+                         }
+                    }
+
+
                 }case "Q" ->{
                     running = false;
                 }
@@ -304,6 +368,7 @@ public class CLI {
     /**
      * Admin create menu after being selected from admin home page
      */
+
     private void adminCreate(){
         boolean running = true;
         while(running) {
@@ -315,10 +380,14 @@ public class CLI {
                     String courseCode = in.nextLine();
                     System.out.println("Enter Course Name");
                     String courseName = in.nextLine();
-                    System.out.println("Enter Course Year Of Study");
-                    String courseYear = in.nextLine();
-                    course = new Course(courseCode,courseName,Integer.parseInt(courseYear)) ;
-                    courseDB.addToDb(courseCode);
+                    System.out.println("Enter Course Degree");
+                    String degree = in.nextLine();
+                    System.out.println("Enter Course Type");
+                    String courseType = in.nextLine();
+                    System.out.println("Enter Course Duration");
+                    int duration = Integer.parseInt(in.nextLine());
+                    course = new Course(courseCode,courseName, degree, courseType, duration  ) ;
+                    courseDb.addToDb(course);
                 }
                 case "M" -> {
                     System.out.println("Enter Module Code");
@@ -382,11 +451,11 @@ public class CLI {
                             email = in.nextLine();
                         } else checker = false;
                     }
-                        System.out.println("Enter Lecturer Department");
-                        String department = in.nextLine();
-                        lecturer = new Lecturer(firstName, surname, moduleCode, phoneNumber, email, department);
-                        lecturerDb.addToDb(lecturer);
-                    }
+                    System.out.println("Enter Lecturer Department");
+                    String department = in.nextLine();
+                    Lecturer lecturer = new Lecturer(firstName, surname, moduleCode, phoneNumber, email, department);
+                    lecturerDb.addToDb(lecturer);
+                }
                 case "S" -> {
                     boolean checker = true;
                     System.out.println("Enter Student Name");
@@ -412,9 +481,9 @@ public class CLI {
                             email = in.nextLine();
                         }checker = false;
                     }
-                    System.out.println("Enter Student Bank Details");
-                    String details = in.nextLine();
-                    student = new Student(firstName,surname,moduleCode,phoneNumber,email,details);
+                    System.out.println("Enter Course Code");
+                    String courseCode = in.nextLine();
+                    student = new Student(firstName,surname,moduleCode,phoneNumber,email,courseCode);
                     studentDb.addToDb(student);
                 }
 
@@ -433,20 +502,29 @@ public class CLI {
         boolean running = true;
         String input;
         while(running){
-            System.out.print("S)how-Student-List G)rade-Student Q)uit");
+            System.out.print("G)rade-Students Q)uit");
             input = in.nextLine();
             switch (input.toUpperCase()) {
-                case "S" -> {
-
-                }
                 case "G" -> {
-                    System.out.println("Enter Student ID");
-                    String sId = in.nextLine();
-                    System.out.println("Enter Result Of The Test");
-                    String result = in.nextLine();
-                    System.out.println("Enter Name Of The Test");
-                    String testName = in.nextLine();
-                    //gradebook.addTestResult(sId,grade);
+                    System.out.println("Enter Module Code");
+                    String moduleCode = in.nextLine();
+                    System.out.println("Enter Result Release DD/MM/YYYY");
+                    String date = in.nextLine();
+                    Gradebook book = new Gradebook(moduleCode, date);
+                    boolean adding = true;
+                    while(adding){
+                        System.out.print("Student id");
+                        String id = in.nextLine();
+                        System.out.println("Student Result");
+                        int moduleResult = Integer.parseInt(in.nextLine());
+                        book.addStudentResult(id, moduleResult);
+                        System.out.println("Continue Y/N ?");
+                        String continued = "Y";
+                        if ( continued != "Y"){
+                            adding = false;
+                            book.storeExamination();
+                        }
+                    }
                 }
                 case "Q" -> {
                     running = false;
@@ -454,6 +532,8 @@ public class CLI {
             }
         }
     }
+
+
 
     /**
      * Lecturer log on system
@@ -482,4 +562,5 @@ public class CLI {
             }
         }
     }
+
 }

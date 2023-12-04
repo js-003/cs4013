@@ -1,9 +1,7 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
-public abstract class Database {
+import java.util.*;
+
+public abstract class Database<T> {
     protected String file_name;
     protected TreeMap<String, String[]> general_db;
 
@@ -24,24 +22,42 @@ public abstract class Database {
 
         } catch (IOException e) {
             System.out.println("Error reading from the file!");
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
 
     protected void saveToFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file_name))) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file_name)))) {
             for (Map.Entry<String, String[]> entry : general_db.entrySet()) {
-                writer.println(entry.getKey() + "," + Arrays.toString(entry.getValue()).replaceAll("^\\[|\\]$", "").replaceAll(" ", ""));
+                String csvLine = entry.getKey() + "," + String.join(",", entry.getValue());
+                writer.println(csvLine);
             }
             System.out.println("Users saved to " + file_name);
         } catch (IOException e) {
-            System.out.println("Error writing to file.");
+            System.out.println("Error writing to file: " + e.getMessage());
         }
     }
 
-    abstract void addToDb(Object o);
 
-    abstract void removeFromDb(String keyValue);
+    public abstract void addToDb(T o);
 
-    abstract ArrayList<String> getUniqueIdentifier();
+    public void removeFromDb(String keyValue){
+        general_db.remove(keyValue);
+        saveToFile();
+    }
+
+    public Set<String> getUniqueIdentifier(){
+        return general_db.keySet();
+    }
+
+    public String[] getDetails(String id){
+        return general_db.get(id);
+    }
+
+    public void removeDB(String id){
+        general_db.remove(id);
+        saveToFile();
+    }
+
 }

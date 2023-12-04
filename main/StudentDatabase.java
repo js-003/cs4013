@@ -1,30 +1,23 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class StudentDatabase extends Database {
+public class StudentDatabase extends Database<Student> {
     StudentDatabase(){
         super.general_db = new TreeMap<>();
         super.file_name = "StudentDB.csv";
         super.loadFromFile();
     }
+
+    public String[] getDetails(String id){
+        return super.general_db.get(id);
+    }
+
     @Override
-    public void addToDb(Object o) {
+
+    public void addToDb(Student o) {
         String[] row = o.toString().split(",");
         // Store only the necessary elements, excluding the key
-        super.general_db.put(row[0], Arrays.copyOfRange(row, 1, row.length));
-        super.saveToFile();
+        general_db.put(row[0], Arrays.copyOfRange(row, 1, row.length));
+        saveToFile();
     }
-    @Override
-    public void removeFromDb(String keyValue){
-        super.general_db.remove(keyValue);
-        super.saveToFile();
-    }
-    
-    @Override
-    public ArrayList<String> getUniqueIdentifier(){
-        return (ArrayList<String>) super.general_db.keySet();
-    }
+
 }

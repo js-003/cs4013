@@ -13,35 +13,35 @@ public class Student {
     private String email;
     private String phone;
     private String bankDetails;
+    private String courseCode;
     private static ArrayList<String> idList = new ArrayList<>();
 
 
-    /**
-     * student constructor that creates a new stsudent given a firstname,lastname,email
-     * phone number and bank details
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param address
-     * @param phone
-     * @param bankDetails
-
-     * */
-    public Student(String firstName, String lastName, String address, String email, String phone, String bankDetails) {
+    //student constructor
+    public Student(String firstName, String lastName, String address, String email, String phone, String courseCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.bankDetails = bankDetails;
         generateStudentId();
+        this.courseCode = courseCode;
+
+    }
+
+    public Student(String id, String firstName, String lastName, String address, String email, String phone, String courseCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.id = id;
+        this.courseCode = courseCode;
 
     }
 
 
-    /**
-     * method to create a studentId
-     * */
+    // Method to generate a student ID
     public void generateStudentId() { //or the original id they insert=yearOfstudy
         LocalDate t = LocalDate.now();
         String id = "" + t.toString().charAt(2) + t.toString().charAt(3);
@@ -58,92 +58,83 @@ public class Student {
             } else i = 0;
 
         }
-        idList.add(id);
-        this.id = id;
+        idList.add(id.toString());
+        this.id = id.toString();
 
     }
 
-    /**
-     * method to change an email address number
-     * @param newEmail the updated address number
-     * */
+    // Method to change email
     public void changeEmail(String newEmail) {
         // checks to see if newEmail is a valid address,if true changes it
-
+        if (isValidEmail(newEmail)) {
             this.email = newEmail;
             System.out.println("Email changed successfully.");
+        } else {
+            System.out.println("Invalid email format. Email not changed.");
         }
+    }
 
-
-    /**
-     * method to change a phone number
-     * @param newPhone the updated phone number
-     * */
+    //method to change Phone number
     public void changePhone(String newPhone) {
         // checks to see if the newPhone is a valid phone number,if true changes it
-
+        if (isValidPhone(newPhone)) {
             this.phone = newPhone;
             System.out.println("Phone number changed successfully.");
+        } else {
+            System.out.println("Invalid phone number format. Phone number not changed.");
         }
+    }
 
-
-    /**
-     * method that changes bankDetails to the String inputted as a parameter
-     * @param newBankDetails updated bankDetails
-     * #*/
+    // Method to change bank details
     public void changeBankDetails(String newBankDetails) {
         //not sure how to check if bank details are correct
         this.bankDetails = newBankDetails;
         System.out.println("Bank details changed successfully.");
     }
 
-/**
- * method to return a students id number as a string
- * */
+    // Validation method for email
+    private boolean isValidEmail(String email) {
+        // if the email conatins an '@' and a '.'it's considered valid
+        return email.contains("@") && email.contains(".");
+    }
+
+    // Validation method for phone number format
+    private boolean isValidPhone(String phone) {
+        // Add your phone number validation logic here
+        // For simplicity, a basic check for numeric characters is done
+        return phone.matches("\\d+");
+    }
 
     public String getId() {
         return id;
     }
-    /**
-     * method to return a student's firstname as a string
-     * */
+
     public String getFirstName() {
         return firstName;
     }
-    /**
-     * method to return a student's lastname as a string
-     * */
+
     public String getLastName() {
         return lastName;
     }
-    /**
-     * method to return a student's address as a string
-     * */
+
     public String getAddress() {
         return address;
     }
-    /**
-     * method to return a student's email as a string
-     * */
+
     public String getEmail() {
         return email;
     }
-    /**
-     * method to return a student's phone number as a string
-     * */
-    public String getPhone(){return phone;
-    }
-    /**
-     * method to return a student's bank details as a string
-     * */
+
     public String getBankDetails() {
         return bankDetails;
     }
-    /**
-     * method to return a student's details as a string
-     * */
-    @Override
+    /*note I do not have set methods for names an id's because im not accounting for people
+    who change their name, and you cannot change your id after its created.
+     */
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s,%s,%s",getFirstName(),getLastName(),getId(),getAddress(),getEmail(),getPhone(),getBankDetails());
+        String format;
+        format = String.format("%s,%s,%s,%s,%s,%s,%s", id, firstName, lastName, address, email,phone,courseCode);
+        return format;
     }
+    //note i know this method will be moved but leaving it here for now
 }

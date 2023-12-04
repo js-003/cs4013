@@ -9,9 +9,10 @@ public class AccountDatabase {
 
     private String file_name;
     private TreeMap<String, String> account_db;
+    private final String FILENAME;
 
-    public AccountDatabase(String file_name){
-        this.file_name = file_name;
+    public AccountDatabase(){
+        this.FILENAME = "AccountDB.csv";
         this.account_db = new TreeMap<>();
         this.loadFromFile();
     }
@@ -20,7 +21,7 @@ public class AccountDatabase {
     private void loadFromFile(){
         String line;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file_name));
+            BufferedReader br = new BufferedReader(new FileReader(FILENAME));
 
             while((line = br.readLine()) != null) {
                 String[] row = line.split(",");
@@ -30,7 +31,6 @@ public class AccountDatabase {
                 }
                 //The below stores the id and password into a treemap
                 account_db.put(row[0], row[1]);
-
             }
 
         } catch(IOException e) {
@@ -54,11 +54,11 @@ public class AccountDatabase {
     }
     //saves changes made to the file: MAKE SURE THAT THE FILE IS IN A FOLDER WITH THE CODE OR GIVE THE PATH
     private void saveToFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(file_name))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILENAME))) {
             for (Map.Entry<String, String> entry : account_db.entrySet()) {
                 writer.println(entry.getKey() + "," + entry.getValue());
             }
-            System.out.println("Users saved to " + file_name);
+            System.out.println("Users saved to " + FILENAME);
         } catch (IOException e) {
             System.out.println("Error writing to file.");
         }
