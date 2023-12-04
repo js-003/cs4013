@@ -2,9 +2,9 @@
 
 Firstly no matter what user is trying to use the system they will need to log in by selecting one of the following by entering the letter before the ) into the command line: A)dmin F)ormating L)ecturer S)tudent Q)uit
 
-          ###**-** A)dmin is for authorised staff to create courses, modules, students and gradebooks
-              **-** After selecting A you will need to input the admin password ***** which will grand you access to the portal as an admin
-              **-** Next you will get to chose more options which are: A)dd C)reate R)emove Q)uit
+          **1.** A)dmin is for authorised staff to create courses, modules, students and gradebooks
+              **a.** After selecting A you will need to input the admin password ***** which will grand you access to the portal as an admin
+              - Next you will get to chose more options which are: A)dd C)reate R)emove Q)uit
                   **-** After selecting A you will get to select what you want to add: C)ourse M)odule L)ecturer S)tudent Q)uit
                       **-** After selecting one of these you will get prompts to enter the details described. If a detail is entered incorrectly you will be asked to                              re-enter it.
                       **-** Q will bring you back to the menu previous of the one you are in.
