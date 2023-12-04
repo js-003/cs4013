@@ -5,19 +5,45 @@ import java.io.*;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The GradingDatabase class represents a database for storing student grading information.
+ */
 public class GradingDatabase {
     private HashMap<String, ArrayList<ArrayList<Object>>> module_grades;
+
     private final String file_name = "StudentGradingDB.csv";
+
+    /**
+     * Constructor for the GradingDatabase class.
+     * Initialise the module_grades HashMap and load data from the file
+     */
     public GradingDatabase() {
         module_grades = new HashMap<>();
         loadFromFile();
     }
 
+    /**
+     * Store an student's grading result in the database.
+     *
+     * @param id         The student ID.
+     * @param date       The date of the grading result
+     * @param moduleCode The code of the module where the result is stored.
+     * @param grade      The grade obtained by the student.
+     * @param score      The corresponding score of the grade.
+     */
     protected void storeResult(String id, String date, String moduleCode, String grade, double score) {
         ArrayList<Object> gradeDetails = new ArrayList<>(Arrays.asList(moduleCode, date, grade, score));
         module_grades.computeIfAbsent(id, k -> new ArrayList<>()).add(gradeDetails);
     }
 
+    /**
+     * Remove an specific grading result for a student based on module code and date.
+     *
+     * @param id         The student ID.
+     * @param moduleCode The code of the module where the result is to be removed.
+     * @param date       The date of the grading result to be removed.
+     * @return True if the result is successfully removed, false if it is not.
+     */
     public boolean removeResult(String id, String moduleCode, String date) {
         if (!module_grades.containsKey(id)) {
             System.out.println("Student ID not found.");
@@ -37,6 +63,9 @@ public class GradingDatabase {
         return false;
     }
 
+    /**
+     * Load grading information from the specified file into the database.
+     */
     public void loadFromFile() {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(file_name))) {
@@ -61,6 +90,9 @@ public class GradingDatabase {
         }
     }
 
+    /**
+     * Save the current grading information in the database to the specified file.
+     */
     protected void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file_name)))) {
             for (Map.Entry<String, ArrayList<ArrayList<Object>>> entry : module_grades.entrySet()) {
@@ -76,7 +108,13 @@ public class GradingDatabase {
         }
     }
 
-    public ArrayList<ArrayList<Object>> getGrades(String id){
+    /**
+     * Retrieve the list of grading details for an specific student.
+     *
+     * @param id The student ID.
+     * @return ArrayList of grading details for an specific student.
+     */
+    public ArrayList<ArrayList<Object>> getGrades(String id) {
         return module_grades.get(id);
     }
 }
