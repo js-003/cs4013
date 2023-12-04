@@ -33,7 +33,27 @@ public class Transcript {
         this.modulesPerSemester = courseModuleDB.getModules(studentDetails[5]);
     }
 
+    public String getModuleTranscript() {
+        int i = 0;
+        for (ArrayList<String> semester : modulesPerSemester) {
+            double sumQca = 0.00;
+            int sumCredit = 0;
+            int numOfModules = semester.size();
+            i++;
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format(String.format("""
+                    +------------------------------------------------------------------------------------------------------------------------------+
+                    |                                                   UL Student Transcript                                                      |
+                    | First Name:    %-110s|                                                                                                       
+                    | Address:       %-110s|                                                                                                            
+                    | Email:         %-110s|                                                                                                                                                                                                                              
+                    | Telephone:     %-110s|                                                                                                             
+                    | Course:        %-110s|                                                                                                              
+                    +------------------------------------------------------------------------------------------------------------------------------+
+                    """, studentDetails[0] + " " + studentDetails[1], studentDetails[2], studentDetails[3], studentDetails[4], studentDetails[5])));
+        }
 
+    }
     public String getTranscript() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format(String.format("""
@@ -47,6 +67,13 @@ public class Transcript {
             +------------------------------------------------------------------------------------------------------------------------------+
             """, studentDetails[0] + " " + studentDetails[1], studentDetails[2], studentDetails[3], studentDetails[4], studentDetails[5])));
 
+        sb.append(String.format("""
+                    +------------------------------------------------------------------------------------------------------------------------------+
+                    | SEMESTER%-117d|
+                    |                                                                                                                              |
+                    | Module      Title                                                                  Grade               Credit                |
+                    |                                                                                                                              |
+                    """));
         int i = 0;
         for (ArrayList<String> semester : modulesPerSemester) {
             double sumQca = 0.00;
