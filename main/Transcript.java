@@ -27,7 +27,7 @@ public class Transcript {
 
         this.gradingDB = new GradingDatabase();
         this.grades = gradingDB.getGrades(student_id);
-
+        //hi
 
         this.courseModuleDB = new CourseModulesDatabase();
         this.modulesPerSemester = courseModuleDB.getModules(studentDetails[5]);
