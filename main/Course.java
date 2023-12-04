@@ -15,10 +15,12 @@ public class Course {
     private ArrayList<String> moduleList;
 
     /**
-     * Creates a course object by passing the parameters below
+     * Creates a course object by passing the parameters
      *
      * @param courseCode The code of a course
      * @param courseName The name of a course
+     * @param degree The degree of the course
+     * @param type
      * @param duration The duration of a course
      */
     public Course(String courseCode, String courseName, String degree, String type, int duration){
@@ -34,6 +36,12 @@ public class Course {
         this.duration = duration;
         getGraduateLevel();
     }
+
+    /**
+     * Returns a course Name
+     *
+     * @return course name
+     */
 
     public String getCourseName(){
         return courseName;
@@ -68,6 +76,9 @@ public class Course {
         }else this.graduateLevel = "Postgraduate";
     }
 
+    /**
+     * Sets the graduate level for a course
+     */
     private void getGraduateLevel(){
         if(type.toLowerCase().contains("bachelor")){
             this.graduateLevel = "Undergraduate";
@@ -100,6 +111,7 @@ public class Course {
     public String getCourseCode() {
         return courseCode;
     }
+
     /**
      * Returns the duration of a course in years
      *

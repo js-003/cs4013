@@ -29,18 +29,6 @@ public class Student {
 
     }
 
-    public Student(String id, String firstName, String lastName, String address, String email, String phone, String courseCode) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.phone = phone;
-        this.id = id;
-        this.courseCode = courseCode;
-
-    }
-
-
     // Method to generate a student ID
     public void generateStudentId() { //or the original id they insert=yearOfstudy
         LocalDate t = LocalDate.now();
