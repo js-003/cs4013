@@ -15,7 +15,9 @@ public class CLI {
     private String user;
     private String password;
     //Admin password for restricted access
-    private String admin_pass = "TestingStuff123?";
+
+
+    private String admin_pass = "AdminAccess123?";
     Scanner in = new Scanner(System.in);
     AccountDatabase user_db = new AccountDatabase();
     LecturerDatabase lecturerDb = new LecturerDatabase();
@@ -257,7 +259,7 @@ public class CLI {
                     String degree = in.nextLine();
                     System.out.println("Enter Course Duration");
                     int duration = Integer.parseInt(in.nextLine());
-                    course = new Course(courseCode,courseName, degree, duration  ) ;
+                    course = new Course(courseCode,courseName, degree, duration) ;
                     courseDb.addToDb(course);
                     System.out.printf("\nCourse Code: %s\nCourse Name: %s\nDegree: %s\nGraduate Level: %s\nDuration: %d\n",course.getCourseCode(),course.getCourseName(),course.getDegree(),course.getGraduateLevel(),course.getDuration());
                 }
