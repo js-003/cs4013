@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Transcript class provides an environment in which other objects can be used to form a well-structured documentation
+ */
 public class Transcript {
     private String student_id;
     private CourseModulesDatabase courseModuleDB;
@@ -14,6 +17,11 @@ public class Transcript {
     private ArrayList<ArrayList<Object>> grades;
     private String[] courseDetails;
     private ModuleDatabase moduleDB;
+
+    /**
+     * Transcript constructors generates the object from student id and introduces other objects
+     * @param student_id
+     */
     public Transcript(String student_id){
         this.student_id = student_id;
 
@@ -33,7 +41,11 @@ public class Transcript {
         this.modulesPerSemester = courseModuleDB.getModules(studentDetails[5]);
     }
 
-
+    /**
+     * Transcript is returned for the given module that the student has undertaken
+     * @param moduleCode The parameter navigate the module for which a test may haven taken
+     * @return The return a multi line String which contain the information regarding the grades for that module along with student details
+     */
     public String getModuleTranscript(String moduleCode){
         for(ArrayList<Object> test : gradingDB.getGrades(student_id)){
             if(test.contains(moduleCode)){
@@ -58,6 +70,11 @@ public class Transcript {
         }
         return "";
     }
+
+    /**
+     * Transcript for the student which lists the undertaken modules for the course with the associated course
+     * @return The returns a multi line String which contains the student details and progression throughout the course with respect to module grading
+     */
     public String getTranscript() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("""

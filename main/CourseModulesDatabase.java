@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * COurse Module DB allows for storing modules in courses where each semester is an array of the modules
+ */
 public class CourseModulesDatabase {
     private String courseCode;
     private String moduleCode;
@@ -19,6 +22,9 @@ public class CourseModulesDatabase {
         loadFromFile();
     }
 
+    /**
+     * Saves the treemap into the csv for storage and reuse
+     */
     public void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(FILENAME))) {
             for (Map.Entry<String, ArrayList<ArrayList<String>>> entry : myMap.entrySet()) {
@@ -38,6 +44,12 @@ public class CourseModulesDatabase {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Creates a storage of the modules in a given course per semester
+     * @param courseCode The param is used as a key in terms of hashmaps
+     * @param numberOfSemesters Allocates the semesters for the module storage
+     */
     public void addCourse(String courseCode, int numberOfSemesters) {
         if (!courseDB.getUniqueIdentifier().contains(courseCode)) {
             System.out.println("Course has not been created");
@@ -59,6 +71,9 @@ public class CourseModulesDatabase {
         System.out.println("Course added with " + numberOfSemesters + " semesters: " + courseCode);
     }
 
+    /**
+     * The CSV is read and the information is stored as a treemap
+     */
     public void loadFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILENAME))) {
             String line;
@@ -80,7 +95,12 @@ public class CourseModulesDatabase {
         }
     }
 
-
+    /**
+     * Stores a given modules in a semester which in turn is stored by the course code key value
+     * @param courseCode
+     * @param semesterIndex
+     * @param moduleCode
+     */
     public void createModule(String courseCode, int semesterIndex, String moduleCode) {
         if(!moduleDB.getUniqueIdentifier().contains(moduleCode)){
             System.out.println("Module has not been created");
@@ -106,6 +126,12 @@ public class CourseModulesDatabase {
         modules.add(moduleCode);
     }
 
+    /**
+     * originally planned for the removal of the given modules for a course if reworking is required
+     * @param courseCode
+     * @param semesterIndex
+     * @param moduleCode
+     */
     public void removeModule(String courseCode, int semesterIndex, String moduleCode) {
         if (!myMap.containsKey(courseCode)) {
             System.out.println("Course code not found.");
@@ -128,6 +154,11 @@ public class CourseModulesDatabase {
 
     }
 
+    /**
+     * The list of semester that hold the modules that are stored in a map with the course key
+     * @param courseCode    The two letter and 3 number id like reference
+     * @return Arraylist of ArrayLists of type String
+     */
     public ArrayList<ArrayList<String>> getModules(String courseCode){
         return myMap.get(courseCode);
     }

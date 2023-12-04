@@ -5,25 +5,21 @@ import java.io.*;
 import java.util.Objects;
 import java.util.TreeMap;
 
+/**
+ * Class for improving the user security through hashing and password to user storage
+ */
 public class AccountDatabase {
 
     private String file_name;
     private TreeMap<String, String> account_db;
     private final String FILENAME;
 
-    /**
-     * Creates a database to store log in credentials
-     */
     public AccountDatabase(){
         this.FILENAME = "AccountDB.csv";
         this.account_db = new TreeMap<>();
         this.loadFromFile();
     }
 
-    /**
-     * Loads details from csv and loads it into the treemap
-     *
-     */
     //loads up the file to use
     private void loadFromFile(){
         String line;
@@ -46,44 +42,25 @@ public class AccountDatabase {
 
     }
     // Check is the id key's value password matches pass(the inputted password)
-
-    /**
-     * Checks of the login matches
-     *
-     * @param id Username or Student ID
-     * @param pass Passowrd
-     * @return Boolean value
-     */
     public boolean login(String id, String pass){
         return Objects.equals(account_db.get(id), preformHashing(pass));
     }
 
     /**
-     * Adds a user to the database
-     *
-     * @param idOrUsername Username or ID
-     * @param pass Password
+     * Adds a user to the csv file with passwords hashed
+     * @param idOrUsername The user of the services
+     * @param pass The value which will be hashed for security purposes
      */
     public void addUser(String idOrUsername, String pass){
         account_db.put(idOrUsername, preformHashing(pass));
         this.saveToFile();
     }
 
-    /**
-     * Removes a user from the database
-     *
-     * @param id Username or ID
-     */
     public void removeUser(String id){
         account_db.remove(id);
         this.saveToFile();
     }
     //saves changes made to the file: MAKE SURE THAT THE FILE IS IN A FOLDER WITH THE CODE OR GIVE THE PATH
-
-    /**
-     * Takes the tree map and converts it into a csv file
-     *
-     */
     private void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILENAME))) {
             for (Map.Entry<String, String> entry : account_db.entrySet()) {
@@ -95,46 +72,20 @@ public class AccountDatabase {
         }
     }
     //Checks the criteria of the password given (formatting seen in the CLI)
-
-    /**
-     * Checks if password is a valid password
-     *
-     * @param password Password
-     * @return Boolean value
-     */
     public boolean isValidPassword(String password) {
         //only a certain number of characters will be allowed for the password
         return password.matches("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()?]).{8,64}$");
     }
     //Checks the criteria of the id given (formatting seen in the CLI)
-    /**
-     * Checks if ID is valid
-     *
-     * @param id ID
-     * @return Boolean value
-     */
     public boolean isValidId(String id) {
         //eight digits in an id
         return id.matches( "^\\d{8}$");
     }
 
-    /**
-     * Checks if Username is valid
-     *
-     * @param user Username
-     * @return Boolean value
-     */
-
     public boolean isValidUsername(String user) {
         //username for the staff login should be seperated by a dot e.g "michael.english"
         return user.matches(".*\\..*");
     }
-
-    /**
-     * Returns a String value of the treemap
-     *
-     * @return String value
-     */
 
     // testing stuff which I have used to help with fixing bugs
     public String toString(){
@@ -146,10 +97,9 @@ public class AccountDatabase {
     }
 
     /**
-     * Returns a hashed string of the password for protection
-     *
-     * @param pass password
-     * @return String Value
+     * Uses the SHA-256 algorithm to convert the passwords into a very long illegible string of characters
+     * @param pass The string password which will be hashed
+     * @return The hashed password
      */
     private String preformHashing(String pass){
         try {
