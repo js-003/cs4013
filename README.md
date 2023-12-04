@@ -10,7 +10,7 @@ Firstly no matter what user is trying to use the system they will need to log in
                   **-** After selecting C you will be get to select what you want to creat: C)ourse M)odule L)ecturer S)tudent Q)uit
                       **-** After selecting one of these you will get prompts to enter the details described. If a detail is entered incorrectly you will be asked to                              re-enter it.
                       **-** Q will bring you back to the menu previous of the one you are in.  <br>            
-          **-** F)ormatting will display the formating for logging in 
+          **-** F)ormatting will display the formating for logging in<br>
           **-** L)ecturer is for lecturer use where the lecturer can grade a student or check the students transcript
               **-** After selecting this you will be approached by a log in page where you need to enter the username and password 
                     [username = lecturersFirstname.lecturersSurname, password = lecturersSurname123?]
