@@ -272,7 +272,7 @@ public class CLI {
                         Module module = new Module(moduleName,moduleCode, credit );
                         ModuleDatabase moduleDB = new ModuleDatabase();
                         moduleDB.addToDb(module);
-                        System.out.printf("\nModule Code: %s\nModule Name: %s\nCredits: %d",module.getModuleCode(),module.getModuleName(),module.getCredits());
+                        System.out.printf("\nModule Code: %s\nModule Name: %s\nCredits: %d\n",module.getModuleCode(),module.getModuleName(),module.getCredits());
                     } catch (RuntimeException e){
                         System.out.println("Processing failed please try again!");
                         e.printStackTrace();
@@ -363,16 +363,17 @@ public class CLI {
                         System.out.println("Invalid ID try again!");
                         break;
                     }
-                    System.out.println("Create the new password for that user");
-                    password = in.nextLine();
-                    if (!user_db.isValidPassword(password)) {
-                        System.out.println("Invalid password try again!");
-                        break;
+                    while (true) {
+                        System.out.println("Create the new password for that user");
+                        password = in.nextLine();
+                        if (!user_db.isValidPassword(password)) {
+                            System.out.println("Invalid password try again! Try Again: ");
+                            password = in.nextLine();
+                        } else break;
                     }
-                    user_db.addUser(student.getId(), password);
-                    System.out.println("Your log on credentials are: \nLog On ID: "+student.getId()+"\nPassword: "+password);
+                        user_db.addUser(student.getId(), password);
+                        System.out.println("\nYour log on credentials are: \nLog On ID: " + student.getId() + "\nPassword: " + password + "\n");
                 }
-
                 case "Q" -> {
                     running = false;
                 }
