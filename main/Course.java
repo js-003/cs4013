@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Course {
-    private String type;
     private String degree;
     private String courseName;
 
@@ -20,10 +19,9 @@ public class Course {
      * @param courseCode The code of a course
      * @param courseName The name of a course
      * @param degree The degree of the course
-     * @param type
      * @param duration The duration of a course
      */
-    public Course(String courseCode, String courseName, String degree, String type, int duration){
+    public Course(String courseCode, String courseName, String degree, int duration){
 
         studentList = new ArrayList<>();
         moduleList = new ArrayList<>();
@@ -32,9 +30,8 @@ public class Course {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.degree = degree;
-        this.type = type;
+        graduateLevel(degree);
         this.duration = duration;
-        getGraduateLevel();
     }
 
     /**
@@ -68,7 +65,6 @@ public class Course {
      */
 
     public void graduateLevel(String level){
-        this.degree = level;
         if(level.toLowerCase().contains("bachelor")){
             this.graduateLevel = "Undergraduate";
         }else if(level.toLowerCase().contains("masters")){
@@ -79,12 +75,8 @@ public class Course {
     /**
      * Sets the graduate level for a course
      */
-    private void getGraduateLevel(){
-        if(type.toLowerCase().contains("bachelor")){
-            this.graduateLevel = "Undergraduate";
-        }else if(type.toLowerCase().contains("masters")){
-            this.graduateLevel = "Masters";
-        }else this.graduateLevel = "Postgraduate";
+    public String getGraduateLevel(){
+        return this.graduateLevel;
     }
     /**
      * Returns a list of students in a course
@@ -108,6 +100,10 @@ public class Course {
      *
      * @return The course code of a course
      */
+
+    public String getDegree(){
+        return degree;
+    }
     public String getCourseCode() {
         return courseCode;
     }
@@ -138,6 +134,6 @@ public class Course {
      * @return Simpler version of details of a course
      */
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s,%d", courseCode, courseName,degree, type,graduateLevel, duration);
+        return String.format("%s,%s,%s,%s,%d", courseCode, courseName,degree,graduateLevel, duration);
     }
 }

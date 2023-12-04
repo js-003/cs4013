@@ -255,12 +255,11 @@ public class CLI {
                     String courseName = in.nextLine();
                     System.out.println("Enter Course Degree");
                     String degree = in.nextLine();
-                    System.out.println("Enter Course Type");
-                    String courseType = in.nextLine();
                     System.out.println("Enter Course Duration");
                     int duration = Integer.parseInt(in.nextLine());
-                    course = new Course(courseCode,courseName, degree, courseType, duration  ) ;
+                    course = new Course(courseCode,courseName, degree, duration  ) ;
                     courseDb.addToDb(course);
+                    System.out.printf("\nCourse Code: %s\nCourse Name: %s\nDegree: %s\nGraduate Level: %s\nDuration: %d\n",course.getCourseCode(),course.getCourseName(),course.getDegree(),course.getGraduateLevel(),course.getDuration());
                 }
                 case "M" -> {
                     try{
@@ -273,6 +272,7 @@ public class CLI {
                         Module module = new Module(moduleName,moduleCode, credit );
                         ModuleDatabase moduleDB = new ModuleDatabase();
                         moduleDB.addToDb(module);
+                        System.out.printf("\nModule Code: %s\nModule Name: %s\nCredits: %d",module.getModuleCode(),module.getModuleName(),module.getCredits());
                     } catch (RuntimeException e){
                         System.out.println("Processing failed please try again!");
                         e.printStackTrace();
@@ -338,6 +338,7 @@ public class CLI {
                     }
                     user_db.addUser(lecturer.getUsername(), password);
                     lecturerDb.addToDb(lecturer);
+                    System.out.printf("%s's log on credentials are\nUsername: %s\nPassword: %s",lecturer.getFirstName(),lecturer.getUsername(),password);
                 }
                 case "S" -> {
                     System.out.println("Enter first name");
