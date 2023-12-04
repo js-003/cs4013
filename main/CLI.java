@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
-
+/**
+ * @author Jakub & Eryk
+ */
 public class CLI {
     private Course course;
     private Module module;
@@ -16,11 +18,11 @@ public class CLI {
     private String admin_pass = "TestingStuff123?";
     Scanner in = new Scanner(System.in);
     AccountDatabase user_db = new AccountDatabase("Account.csv");
-    StoreToDatabase lecturerDb = new StoreToDatabase("Lecturer.csv");
-    StoreToDatabase studentDb = new StoreToDatabase("Student.csv");
+    LecturerDatabase lecturerDb = new LecturerDatabase();
+    StudentDatabase studentDb = new StudentDatabase();
 
-    StoreToDatabase courseDB = new StoreToDatabase("Course.csv");
-    StoreToDatabase moduleDb = new StoreToDatabase("Module.csv");
+    StoreToDatabase courseDB = new StoreToDatabase("Course.csv"); // needs to be changed to course database
+    StoreToDatabase moduleDb = new StoreToDatabase("Module.csv"); // needs to be changed to module database
 
     public void run() {
         System.out.println("""
@@ -153,6 +155,10 @@ public class CLI {
 
 
     //JAKUB
+
+    /**
+     * Student menu which displays all options a student can use
+     */
     private void studentMenu(){
         boolean running = true;
         String userCommands;
@@ -174,6 +180,11 @@ public class CLI {
             }
         }
     }
+
+    /**
+     * Admin menu which displays all options an admin can use
+     *      - User has to input the admin password, if password is correct access is granted
+     */
     private void adminAccess(){
         System.out.println("ADMIN PASSWORD REQUIRED");
         String admin_pass_attempt = in.nextLine();
@@ -202,6 +213,9 @@ public class CLI {
         }
     }
 
+    /**
+     * Remove menu for admins after it is selected from the admin menu
+     */
     private void adminRemove(){
         boolean running = true;
         while(running){
@@ -225,6 +239,9 @@ public class CLI {
         }
     }
 
+    /**
+     * Add Student to course by an admin
+     */
     private void addStudent(){
         boolean running = true;
         while (running){
@@ -259,6 +276,10 @@ public class CLI {
             }
         }
     }
+
+    /**
+     * Admin add menu after selecting add on admin home page
+     */
     private void adminAdd(){
         boolean running = true;
         while(running){
@@ -279,6 +300,10 @@ public class CLI {
 
         }
     }
+
+    /**
+     * Admin create menu after being selected from admin home page
+     */
     private void adminCreate(){
         boolean running = true;
         while(running) {
@@ -392,6 +417,7 @@ public class CLI {
                     student = new Student(firstName,surname,moduleCode,phoneNumber,email,details);
                     studentDb.addToDb(student);
                 }
+
                 case "Q" -> {
                     running = false;
                 }
@@ -399,6 +425,10 @@ public class CLI {
         }
     }
 
+    /**
+     * Lecturer menu after successful log on
+     *
+     */
     private void lecturerLoggedOn(){
         boolean running = true;
         String input;
@@ -425,6 +455,10 @@ public class CLI {
         }
     }
 
+    /**
+     * Lecturer log on system
+     *
+     */
     private void lecturerAccess() {
         boolean running = true;
         String input;
