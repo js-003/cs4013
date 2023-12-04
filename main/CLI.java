@@ -287,7 +287,7 @@ public class CLI {
                         String email = in.nextLine();
                         System.out.println("Enter course code");
                         String courseCode = in.nextLine();
-                        Student student = new Student(id, firstName, surName, address, phoneNumber, email, courseCode);
+                        Student student = new Student(firstName, surName, address, phoneNumber, email, courseCode);
                         StudentDatabase studentDB = new StudentDatabase();
                         studentDB.addToDb(student);
                         user_db.addUser(user, password);
