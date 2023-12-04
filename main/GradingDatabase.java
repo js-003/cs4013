@@ -21,6 +21,7 @@ public class GradingDatabase {
      */
     protected GradingDatabase() {
         module_grades = new HashMap<>();
+        loadFromFile();
     }
 
     /**
@@ -92,7 +93,10 @@ public class GradingDatabase {
     }
 
     /**
-     * Save the current student grades to a CSV file
+     * Save the current student grades to a CSV file.
+     * Write the student grades stored in the module_grades HashMap to the specified CSV file.
+     * The CSV file format includes student ID, module code, date, grade, and score.
+     * Display a success message if it is successful, or an error message if it fails.
      */
     protected void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file_name)))) {
@@ -107,5 +111,17 @@ public class GradingDatabase {
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         }
+    }
+
+    /**
+     * Retrieve the grades of an specific student.
+     *
+     * @param id The student ID for which grades are needed to get back.
+     * @return ArrayList of ArrayLists representing the grades of the specified student.
+     * Each inner ArrayList contains module code, date, grade, and score for an specific module.
+     * Returns null if the student ID is not found.
+     */
+    public ArrayList<ArrayList<Object>> getGrades(String id) {
+        return module_grades.get(id);
     }
 }
