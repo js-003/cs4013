@@ -34,9 +34,33 @@ public class Transcript {
     }
 
 
+    public String getModuleTranscript(String moduleCode){
+        for(ArrayList<Object> test : gradingDB.getGrades(student_id)){
+            if(test.contains(moduleCode)){
+                String[] holder = moduleDB.getDetails(moduleCode);
+
+                return String.format((String.format("""
+            +------------------------------------------------------------------------------------------------------------------------------+
+            |                                                   UL Student Transcript                                                      |
+            | First Name:    %-110s|                                                                                                                                                                                                                  
+            | Email:         %-110s|                                                                                                                                                                    
+            | Course:        %-110s|                                                                                                              
+            +------------------------------------------------------------------------------------------------------------------------------+
+            +------------------------------------------------------------------------------------------------------------------------------+
+            |                                                                                                                              |
+            | Module      Title                                                                  Grade               Credit                |
+            |                                                                                                                              |
+            | %-5s        %-65s       %-2s                %-1s                    |
+            |                                                                                                                              |
+            +------------------------------------------------------------------------------------------------------------------------------+
+            """, studentDetails[0] + " " + studentDetails[1], studentDetails[3], studentDetails[5], moduleCode,holder[0] ,test.get(2), holder[1])));
+            }
+        }
+        return "";
+    }
     public String getTranscript() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format(String.format("""
+        sb.append(String.format("""
             +------------------------------------------------------------------------------------------------------------------------------+
             |                                                   UL Student Transcript                                                      |
             | First Name:    %-110s|                                                                                                       
@@ -45,7 +69,7 @@ public class Transcript {
             | Telephone:     %-110s|                                                                                                             
             | Course:        %-110s|                                                                                                              
             +------------------------------------------------------------------------------------------------------------------------------+
-            """, studentDetails[0] + " " + studentDetails[1], studentDetails[2], studentDetails[3], studentDetails[4], studentDetails[5])));
+            """, studentDetails[0] + " " + studentDetails[1], studentDetails[2], studentDetails[3], studentDetails[4], studentDetails[5]));
 
         int i = 0;
         for (ArrayList<String> semester : modulesPerSemester) {
