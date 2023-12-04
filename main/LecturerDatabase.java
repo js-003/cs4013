@@ -1,6 +1,9 @@
 import java.util.*;
 
 public class LecturerDatabase extends Database<Lecturer> {
+    /**
+     * Creates a database to store lecturers
+     */
     LecturerDatabase(){
         super.general_db = new TreeMap<>();
         super.file_name = "ModuleDB.csv";
@@ -11,6 +14,11 @@ public class LecturerDatabase extends Database<Lecturer> {
     public String[] getDetails(String id){
         return super.general_db.get(id);
     }
+    /**
+     * Adds a lecturer object to the database
+     *
+     * @param o Lecturer object
+     */
 
     @Override
 

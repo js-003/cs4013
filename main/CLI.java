@@ -25,6 +25,10 @@ public class CLI {
 
     CourseDatabase courseDb = new CourseDatabase();
 
+    /**
+     * Runs the menu program
+     */
+
     public void run() {
         System.out.println("""
                 ############################################################
@@ -80,51 +84,9 @@ public class CLI {
 
     }
 
-    private void adminAccess1(){
-        System.out.println("ADMIN PASSWORD REQUIRED");
-        String admin_pass_attempt = in.nextLine();
-        if(Objects.equals(admin_pass_attempt, admin_pass)) {
-            System.out.println("ACCESS GRANTED");
-            String adminCommands;
-            boolean running = true;
-            while(running){
-                System.out.println("A)dd-User R)emove-User Q)uit");
-                adminCommands = in.nextLine();
-                switch(adminCommands.toUpperCase()){
-                    case "A" -> {
-                        System.out.println("Create the new user ID or Username");
-                        user = in.nextLine();
-                        if(!user_db.isValidId(user) && !user_db.isValidUsername(user)){
-                            System.out.println("Invalid ID or Username try again!");
-                            break;
-                        }
-                        System.out.println("Create the new password for that user");
-                        password = in.nextLine();
-                        if(!user_db.isValidPassword(password)){
-                            System.out.println("Invalid password try again!");
-                            break;
-                        }
-                        user_db.addUser(user, password);
-                        System.out.println("New user added!");
-                    }
-                    case "R" -> {
-                        System.out.println("Enter user ID for removal");
-                        user = in.nextLine();
-                        if(!user_db.isValidId(user) && !user_db.isValidUsername(user)){
-                            System.out.println("Invalid ID or Username try again!");
-                            break;
-                        }
-                        user_db.removeUser(user);
-                        System.out.println("User removed!");
-                    }
-                    case "Q" -> {
-                        running = false;
-                    }
-                }
-            }
-        }
-    }
-
+    /**
+     * Student Access Menu
+     */
     public void studentAccess(){
         boolean running = true;
         String userCommandds;
