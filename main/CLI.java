@@ -422,11 +422,13 @@ public class CLI {
                         }
                     }
                 }case "V" ->{
+                    System.out.println("Enter Module Code: ");
+                    String moduleCode = in.nextLine();
                     System.out.println("Enter Student ID: ");
                     String ID = in.nextLine();
                     try{
                         Transcript transcript = new Transcript(ID);
-                        System.out.println(transcript.getTranscript());
+                        System.out.println(transcript.getModuleTranscript(moduleCode));
                     } catch(RuntimeException e) {
                         e.printStackTrace();
                     }
