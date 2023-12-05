@@ -5,6 +5,9 @@ public abstract class Database<T> {
     protected String file_name;
     protected TreeMap<String, String[]> general_db;
 
+    /**
+     * Converts a csv file into a Treemap<String, String[]>
+     */
     protected void loadFromFile() {
         String line;
         try {
@@ -26,7 +29,10 @@ public abstract class Database<T> {
         }
     }
 
-
+    /**
+     * Stores the tree map into a csv file
+     *
+     */
     protected void saveToFile() {
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file_name)))) {
             for (Map.Entry<String, String[]> entry : general_db.entrySet()) {
