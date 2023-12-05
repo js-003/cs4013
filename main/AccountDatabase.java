@@ -93,6 +93,7 @@ public class AccountDatabase {
         for(Map.Entry< String, String > entry: account_db.entrySet()){
             holder.append(entry.getKey()).append("    ").append(entry.getValue()).append("\n");
         }
+
         return holder.toString();
     }
 

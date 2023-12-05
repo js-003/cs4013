@@ -13,6 +13,7 @@ public class Transcript {
 
     private GradingDatabase gradingDB;
 
+
     private CourseDatabase courseDB;
     private ArrayList<ArrayList<Object>> grades;
     private String[] courseDetails;

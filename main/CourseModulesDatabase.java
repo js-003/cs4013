@@ -154,6 +154,7 @@ public class CourseModulesDatabase {
 
     }
 
+
     /**
      * The list of semester that hold the modules that are stored in a map with the course key
      * @param courseCode    The two letter and 3 number id like reference
